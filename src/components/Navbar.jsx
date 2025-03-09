@@ -12,6 +12,7 @@ import {
   FaFileAlt,
   FaProjectDiagram,
   FaEnvelope,
+  FaCode,
   FaLinkedin,
   FaGithub,
 } from "react-icons/fa";
@@ -24,7 +25,7 @@ const navigation = [
   { name: "Home", href: "#home", icon: FiHome },
   { name: "About", href: "#about", icon: FiUser },
   { name: "Skills", href: "#skills", icon: FiTool },
-  { name: "Hackathon", href: "#hackathon", icon: FiTool },
+  { name: "Hackathon", href: "#hackathon", icon: FaCode },
   { name: "Resume", href: "#resume", icon: FiFileText },
   { name: "Projects", href: "#projects", icon: FiGrid },
   { name: "Contact", href: "#contact", icon: FiMail },
@@ -54,7 +55,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16 px-4">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white ml-auto mr-[2vh]" // Left ko ml-auto se replace kiya
+            className="text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white ml-auto mr-[4vh]" // Left ko ml-auto se replace kiya
           >
             {sidebarOpen ? (
               <XMarkIcon

@@ -129,7 +129,11 @@ const About = () => {
                 >
                     <div className="flex flex-col items-center lg:items-start">
                         <p className="mb-6 max-w-xl py-6 px-6 bg-gradient-to-r  text-white shadow-lg rounded-lg text-justify leading-relaxed md:text-lg sm:text-base hover:shadow-xl transition-shadow duration-300 ease-in-out">
-                            Hi, I’m Krish, a passionate Software Developer specializing in modern web applications with Django, React, Node.js, and Next.js. I have hands-on experience in building scalable applications and deploying them on platforms like Heroku. During my internship at TechInfinity, I developed an e-commerce platform, enhancing my skills in full-stack development.
+                        I’m Krish, a Software Developer specializing in Django, React, Node.js, and Next.js. I build scalable, high-performance applications and deploy them on Heroku and other platforms.
+
+During my internship at TechInfinity, I developed a feature-rich eCommerce platform, enhancing my full-stack expertise. I have a strong passion for UI/UX design, ensuring responsive and visually appealing web applications.
+
+I integrate AI-driven solutions to optimize development time, streamline workflows, and enhance user experience. My focus is on efficiency, innovation, and cutting-edge web technologies to deliver modern and impactful digital solutions.
                         </p>
                         {/* Skill Icons Section */}
                         <div className="flex gap-4 mt-4">
