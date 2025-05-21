@@ -1,7 +1,7 @@
 // import React from "react";
 // import { motion } from "framer-motion";
 // import { Typewriter } from "react-simple-typewriter";
-// import backgroundImage from "../assets/resume-img.jpg"; // ✅ Ensure correct path
+// import backgroundImage from "../assets/my image.png"; // ✅ Ensure correct path
 
 // const container = (delay) => ({
 //   hidden: { y: 50, opacity: 0 },
