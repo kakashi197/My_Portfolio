@@ -60,7 +60,7 @@ const Contact = () => {
     } catch (error) {
       setAlert({
         show: true,
-        message: error.response?.data?.message || 'संदेश भेजने में त्रुटि',
+        message: error.response?.data?.message || 'message not send, please try again later!',
         type: 'error'
       });
     } finally {
