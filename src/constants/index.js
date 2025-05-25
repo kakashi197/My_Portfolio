@@ -44,13 +44,14 @@ export const PROJECTS = [
     github: "https://github.com/krishe123/weatherapp",
     liveDemo: " https://krishe123.github.io/weatherapp/",
   },
+  
 
 ];
 
 export const CONTACT = {
-  address: "767 Fifth Avenue, New York, NY 10153 ",
-  phoneNo: "+12 4555 666 00 ",
-  email: "me@example.com",
+  address: "sector-26, Gandhinagar, Gujarat, India",
+  phoneNo: "+91 6354463694",
+  email: "kksolanki@gmail.com",
 };
 
 
@@ -60,8 +61,8 @@ export const resumeData = {
     title: "Computer Engineer | Web Developer | Programmer",
     phone: "+91 6354463694",
     email: "kksolanki2325@gmail.com",
-    linkedIn: "https://linkedin.com/in/krishsolanki",
-    github: "https://github.com/krishe123",
+    linkedIn: "www.linkedin.com/in/krish-solanki-648219365",
+    github: "https://github.com/kakashi197",
   },
   education: [
     {

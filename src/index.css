@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
-
+#project_live_button{
+     @media (max-width: 760px) {
+    width: 15vh;
+  }
+}
 
 @plugin "daisyui";

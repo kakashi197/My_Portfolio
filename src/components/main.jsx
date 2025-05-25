@@ -19,7 +19,7 @@ import logo from "../assets/kevinRushLogo.png";
 
 // Navigation Links for Sidebar
 const navigation = [
-  { name: "Home", href: "#", icon: FaHome },
+ { name: "Home", href: "#", icon: FaHome },
   { name: "About", href: "#about", icon: FaUser },
   { name: "Skills", href: "#skills", icon: FaTools },
   { name: "Resume", href: "#resume", icon: FaFileAlt },
