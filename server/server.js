@@ -22,8 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/portfolio_contacts';
 
 mongoose.connect(mongoURI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
+ 
 })
 .then(() => console.log('MongoDB Connected Successfully!'))
 .catch(err => console.error('MongoDB Connection Error:', err));
