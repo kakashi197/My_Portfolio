@@ -8,7 +8,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// MongoDB कनेक्शन (आपका स्थानीय MongoDB)
+
 mongoose.connect('mongodb://localhost:27017/portfolio_contacts', {
   useNewUrlParser: true,
   useUnifiedTopology: true
