@@ -55,7 +55,7 @@ const Contact = () => {
       // after showing alert for 5 seconds, hide it
       setTimeout(() => {
         setAlert({ show: false });
-      }, 5000);
+      }, 3000);
 
     } catch (error) {
       setAlert({
