@@ -12,7 +12,11 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/api/contact', contactRoutes);
+app.use(cors({
+  origin: 'https://my-portfolio-beta-six-93.vercel.app',  // frontend URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type'],
+}));
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI, {
