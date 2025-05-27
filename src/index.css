@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 #project_live_button{
-     @media (max-width: 760px) {
+     @media (max-width: 366px) {
     width: 15vh;
   }
 }
