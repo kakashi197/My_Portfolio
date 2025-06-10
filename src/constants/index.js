@@ -27,13 +27,13 @@ export const EXPERIENCES = [
 
 export const PROJECTS = [
   {
-    title: "E-Commerce Website",
+    title: "Online Notes App",
     image: project1,
     description:
-      "A fully functional e-commerce website with features like product listing, shopping cart, and user authentication.",
-    technologies: ["HTML", "CSS", "JS", "DJANGO"],
-    github: "https://github.com/krishe123/DjangoProject",
-    liveDemo: "https://hatakekakashi143.pythonanywhere.com/search/",
+      "A secure web application for storing and organizing important notes/documents with user authentication and cloud storage.",
+    technologies: ["HTML", "CSS", "JS"],
+    github: "https://github.com/kakashi197/Online-Note-App",
+    liveDemo: "https://kakashi197.github.io/Online-Note-App/",
   },
   {
     title: "weather App",
@@ -41,8 +41,8 @@ export const PROJECTS = [
     description:
       "An App that shows Diferent Diferent Cieties Wathers.",
     technologies: ["HTML", "CSS", "JS"],
-    github: "https://github.com/krishe123/weatherapp",
-    liveDemo: " https://krishe123.github.io/weatherapp/",
+    github: "https://github.com/kakashi197/WeatherApp",
+    liveDemo: "https://kakashi197.github.io/WeatherApp/",
   },
   
 
