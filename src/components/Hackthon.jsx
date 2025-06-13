@@ -1,21 +1,22 @@
 
-
 import React from "react";
+import { HACKATHON_INFO } from "../constants";
 import logo from "../assets/Hack1.jpg";
+
 
 const Hackathon = () => {
   return (
     <div
       id="hackathon"
-      className="min-h-screen pb-24 px-5 flex flex-col items-center bg-gradient-to-br  text-white"
+      className="min-h-screen pb-24 px-5 flex flex-col items-center bg-gradient-to-br   text-white"
     >
       {/* Header Section */}
       <header className="text-center mb-16 mt-10 animate-fade-in-up">
         <h1 className="text-4xl md:text-5xl font-extrabold drop-shadow-lg">
-          🚀 Welcome to Hackathon 2024
+          {HACKATHON_INFO.title}
         </h1>
         <p className="text-lg md:text-xl text-gray-300 mt-4 max-w-3xl mx-auto">
-          Dive into 48 hours of innovation, creativity, and tech-powered brilliance. Whether you're a coder, designer, or idea machine — there's a place for you here.
+          {HACKATHON_INFO.description}
         </p>
         <div className="mt-6">
           <a
@@ -30,18 +31,39 @@ const Hackathon = () => {
       {/* Hackathon Details Section */}
       <section className="bg-white/10 backdrop-blur-lg shadow-2xl rounded-3xl p-8 md:p-12 w-full max-w-5xl mb-16 animate-slide-up">
         <h2 className="text-3xl md:text-4xl font-bold text-pink-400 mb-6">
-          💡 About the Hackathon
+          💡 My Hackathon Journey
         </h2>
-        <p className="text-gray-200 leading-relaxed text-lg">
-          This 48-hour Hackathon is your gateway to solving real-world challenges using cutting-edge technologies. Collaborate, build, and bring your ideas to life alongside fellow enthusiasts, mentors, and tech leaders.
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 text-lg">
-          <p className="text-gray-300">
-            📅 <strong className="text-white">Date:</strong> January 20-22, 2024
+        
+        <div className="space-y-4 text-gray-200 leading-relaxed text-lg">
+          <p>
+            As a {HACKATHON_INFO.details.team}, we developed a <strong>{HACKATHON_INFO.details.project}</strong> 
+            that streamlined relocation services with innovative features.
           </p>
-          <p className="text-gray-300">
-            📍 <strong className="text-white">Location:</strong> B & B Institute, Anand, Vallabh Vidyanagar
-          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            <div>
+              <h3 className="text-xl font-semibold text-cyan-400 mb-2">Technologies Used</h3>
+              <ul className="space-y-2">
+                <li><strong>Frontend:</strong> {HACKATHON_INFO.details.technologies.frontend.join(", ")}</li>
+                <li><strong>Backend:</strong> {HACKATHON_INFO.details.technologies.backend.join(", ")}</li>
+                <li><strong>Design:</strong> {HACKATHON_INFO.details.technologies.design.join(", ")}</li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 className="text-xl font-semibold text-cyan-400 mb-2">Key Achievements</h3>
+              <ul className="list-disc pl-5 space-y-1">
+                {HACKATHON_INFO.details.achievements.map((achievement, index) => (
+                  <li key={index}>{achievement}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 text-lg">
+            <p>📅 <strong>Date:</strong> {HACKATHON_INFO.details.date}</p>
+            <p>📍 <strong>Location:</strong> {HACKATHON_INFO.details.location}</p>
+          </div>
         </div>
       </section>
 
@@ -52,10 +74,13 @@ const Hackathon = () => {
       >
         <div className="flex-1">
           <h2 className="text-3xl md:text-4xl font-bold text-cyan-400 mb-4">
-            🏅 My Certificate
+            🏅 Achievement Recognized
           </h2>
           <p className="text-gray-200 text-lg">
-            Every participant receives a beautifully designed certificate recognizing their hard work, creativity, and passion for innovation. It's not just a certificate — it's a badge of honor!
+            {HACKATHON_INFO.details.certificate.description}
+          </p>
+          <p className="mt-4 text-pink-300">
+            Awarded 3rd Prize for our innovative solution among 30+ participating teams.
           </p>
         </div>
         <div className="flex-1">
@@ -67,12 +92,10 @@ const Hackathon = () => {
         </div>
       </section>
 
-    
-
       {/* Footer Section */}
       <footer className="text-center text-gray-400 mt-20 text-sm animate-fade-in-up">
         <p>
-          © 2024 Hackathon | Crafted with ❤️ and limitless imagination. Built by future-makers for future-makers.
+          © 2024 Hackathon Experience | Proud moment in my academic journey at Government Polytechnic Gandhinagar
         </p>
       </footer>
     </div>
@@ -80,7 +103,6 @@ const Hackathon = () => {
 };
 
 export default Hackathon;
-
 
 
 

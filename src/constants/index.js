@@ -1,5 +1,5 @@
-import project1 from "../assets/projects/project-1.jpg";
-import project2 from "../assets/projects/project-2.jpg";
+import project1 from "../assets/projects/Online notes app.png";
+import project2 from "../assets/projects/Weather App.png";
 import project3 from "../assets/projects/project-3.jpg";
 import project4 from "../assets/projects/project-4.jpg";
 
@@ -7,7 +7,7 @@ export const HERO_CONTENT = `I am a passionate full stack developer with a knack
 
 export const ABOUT_TEXT = `I am a dedicated and versatile full stack developer with a passion for creating efficient and user-friendly web applications. With 5 years of professional experience, I have worked with a variety of technologies, including React, Next.js, Node.js, MySQL, PostgreSQL, and MongoDB. My journey in web development began with a deep curiosity for how things work, and it has evolved into a career where I continuously strive to learn and adapt to new challenges. I thrive in collaborative environments and enjoy solving complex problems to deliver high-quality solutions. Outside of coding, I enjoy staying active, exploring new technologies, and contributing to open-source projects.`;
 
-export const EXPERIENCES = [
+export const experiences = [
   {
     year: "2024 - Present",
     role: "Full Stack Developer",
@@ -22,7 +22,7 @@ export const EXPERIENCES = [
     description: `Designed and developed dynamic user interfaces for web applications, ensuring seamless integration of frontend components with backend APIs built using Django and MySQL.`,
     technologies: ["HTML", "CSS", "DJANGO", "JS", "mySQL"],
   },
-  
+  // Add other experiences as needed
 ];
 
 export const PROJECTS = [
@@ -101,4 +101,38 @@ export const resumeData = {
   certifications: [
     "Hackathon Project Winner",
   ],
+};
+
+
+
+
+
+
+
+
+// this my hackthon informations 
+
+export const HACKATHON_INFO = {
+  title: "🚀 B&B Institute Hackathon 2024",
+  description: "Participated in a 48-hour intensive coding competition during my Diploma 4th semester, where we developed a complete Movers & Packers web application.",
+  details: {
+    date: "January 20-22, 2024",
+    location: "B & B Institute, Anand, Vallabh Vidyanagar",
+    team: "3 members team",
+    project: "Movers & Packers Website",
+    technologies: {
+      frontend: ["HTML", "CSS", "JavaScript"],
+      backend: ["PHP", "MySQL"],
+      design: ["Figma", "Adobe XD"]
+    },
+    achievements: [
+      "Completed all assigned tasks through 3 rounds",
+      "Won 3rd prize for innovative design and functionality",
+      "Implemented real-world logistics features"
+    ],
+    certificate: {
+      description: "Awarded for outstanding performance in development and problem-solving",
+      image: "../assets/Hack1.jpg"
+    }
+  }
 };

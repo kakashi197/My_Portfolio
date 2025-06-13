@@ -101,8 +101,13 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
-import backgroundImage from "../assets/my image.png"; // ✅ Ensure correct path
+import backgroundImage from "../assets/my image.png";
 
+// ✅ Desktop Background Image URL
+const deskImage =
+  "https://images.unsplash.com/photo-1484417894907-623942c8ee29?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80";
+
+// ✅ Animation container
 const container = (delay) => ({
   hidden: { y: 50, opacity: 0 },
   visible: {
@@ -116,29 +121,39 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="flex flex-col items-center justify-center text-center w-full h-screen overflow-hidden"
+      className="flex flex-col items-center justify-center text-center w-full h-screen overflow-hidden "
     >
-      {/* ✅ Background Image (Only on Small Screens) */}
+      {/* ✅ Background Image: Small Screens Only */}
       <div
-          className="absolute inset-0 w-full h-full bg-cover bg-center sm:hidden"
-          style={{
-            backgroundImage: `url(${backgroundImage})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            filter: "brightness(80%)", // Slight dark effect for readability
-          }}
+        className="absolute inset-0 w-full h-full bg-cover bg-center sm:hidden"
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          filter: "brightness(80%)",
+        }}
       ></div>
 
-      {/* ✅ Dark Gradient Overlay for Better Readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80 sm:bg-transparent"></div>
+      {/* ✅ Background Image: Medium to Large Screens */}
+      <div
+        className="absolute inset-0 w-full h-full bg-cover bg-center hidden sm:block"
+        style={{
+          backgroundImage: `url(${deskImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          filter: "brightness(75%)",
+        }}
+      ></div>
 
-      {/* ✅ Floating Effects for Visual Appeal */}
+      {/* ✅ Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80"></div>
+
+      {/* ✅ Floating Visual Effects */}
       <div className="absolute top-10 left-10 w-72 h-72 bg-purple-500 blur-3xl opacity-30 rounded-full animate-pulse hidden md:block"></div>
       <div className="absolute bottom-10 right-10 w-96 h-96 bg-pink-400 blur-3xl opacity-20 rounded-full animate-pulse hidden md:block"></div>
 
-      {/* ✅ Content Wrapper */}
+      {/* ✅ Content */}
       <div className="relative z-10 w-full max-w-3xl px-6">
-        {/* ✅ Animated Heading */}
         <motion.h1
           variants={container(0.2)}
           initial="hidden"
@@ -148,7 +163,6 @@ const Hero = () => {
           Welcome, I'm <span className="text-purple-400">Krish Solanki</span>
         </motion.h1>
 
-        {/* ✅ Animated Subtitle with Typewriter Effect */}
         <motion.p
           variants={container(0.4)}
           initial="hidden"
@@ -165,7 +179,7 @@ const Hero = () => {
                 "UI/UX Enthusiast",
                 "Full Stack Engineer",
               ]}
-              loop={0} // Infinite loop
+              loop={0}
               cursor
               cursorStyle="|"
               typeSpeed={80}
@@ -176,7 +190,7 @@ const Hero = () => {
         </motion.p>
       </div>
 
-      {/* ✅ Scroll Indicator (Hidden on Small Screens) */}
+      {/* ✅ Scroll Indicator */}
       <motion.div
         variants={container(0.8)}
         initial="hidden"
@@ -195,6 +209,7 @@ const Hero = () => {
 };
 
 export default Hero;
+
 
 
 

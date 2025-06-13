@@ -11,21 +11,21 @@ const resumeData = {
   },
   education: [
     {
-      degree: "Diploma in Computer Engineering",
+      Qualification: "Diploma in Computer Engineering",
       institution: "Government Polytechnic Gandhinagar",
-      year: 2021,
+      year: 2025,
       result: "8.27 SPI",
     },
     {
       degree: "10th Standard",
-      institution: "Sharada English School",
+      institution: "Sharada English School, Vadodara",
       year: 2018,
       result: "80%",
     },
   ],
   skills: [
     "HTML, CSS, JavaScript",
-    "Django, Python, Node.js, React.js, MongoDB",
+    "Django, Python, Node.js, Express.js, Next.js, React.js, MongoDB",
     "Java (Basics)",
     "Responsive Web Design"
   ],
@@ -34,20 +34,20 @@ const resumeData = {
       role: "Internship at TechInfinity",
       description: "Built an E-commerce website using Django, HTML, CSS, and JavaScript.",
       company: "TechInfinity",
-      duration: "3 Months",
+      duration: "45 days",
       location: "Remote"
     },
     {
       role: "Personal Projects",
-      description: "Developed a portfolio website and various web applications.",
+      description: "Developed a portfolio website,Online Notes App,Weather App, and various web applications.",
       company: "Self",
       duration: "Ongoing",
       location: "Gandhinagar"
     }
   ],
   certifications: [
-    "Python Basics Certification",
-    "HTML & CSS Web Development Course",
+    "Python Internship Certification",
+    "Web Development Course Certification",
     "Java Programming Basics"
   ]
 };

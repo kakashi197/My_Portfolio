@@ -2,7 +2,7 @@
 
 #project_live_button{
      @media (max-width: 366px) {
-    width: 15vh;
+     width: 17vh;
   }
 }
 
