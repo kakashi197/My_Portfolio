@@ -370,203 +370,377 @@
 
 
 
-
-
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaLinkedin, FaGithub, FaTwitter, FaMapMarkerAlt, FaPhone, FaEnvelope } from 'react-icons/fa';
+import { 
+  FaLinkedin, 
+  FaGithub, 
+  FaTwitter, 
+  FaMapMarkerAlt, 
+  FaPhone, 
+  FaEnvelope,
+  FaWhatsapp,
+  FaTelegram,
+  FaDiscord
+} from 'react-icons/fa';
+import { IoMdSend } from 'react-icons/io';
+import { RiLightbulbFlashFill } from 'react-icons/ri';
 
 const ContactInfo = () => {
-  // Your personal information
+  // Enhanced contact details with more options
   const contactDetails = [
     {
-      icon: <FaEnvelope className="text-xl text-purple-400" />,
+      icon: <FaEnvelope />,
       title: "EMAIL",
       value: "kksolanki2325@gmail.com",
-      link: "mailto:kksolanki2325@gmail.com"
+      link: "mailto:kksolanki2325@gmail.com",
+      color: "from-purple-500 to-pink-500",
+      hoverColor: "hover:shadow-purple-500/30"
     },
     {
-      icon: <FaPhone className="text-xl text-blue-400" />,
+      icon: <FaPhone />,
       title: "PHONE",
-      value: "+91 1234567890", // Replace with your actual number
-      link: "tel:+911234567890"
+      value: "+91 98765 43210",
+      link: "tel:+919876543210",
+      color: "from-blue-500 to-cyan-500",
+      hoverColor: "hover:shadow-blue-500/30"
     },
     {
-      icon: <FaMapMarkerAlt className="text-xl text-pink-400" />,
-      title: "ADDRESS",
-      value: "Ahmedabad, Gujarat, India",
-      link: "https://maps.google.com/?q=Ahmedabad"
+      icon: <FaWhatsapp />,
+      title: "WHATSAPP",
+      value: "Chat instantly",
+      link: "https://wa.me/919876543210",
+      color: "from-green-500 to-teal-500",
+      hoverColor: "hover:shadow-green-500/30"
     },
     {
-      icon: <FaLinkedin className="text-xl text-sky-400" />,
+      icon: <FaMapMarkerAlt />,
+      title: "LOCATION",
+      value: "Ahmedabad, India",
+      link: "https://maps.app.goo.gl/YourLocationLink",
+      color: "from-red-500 to-orange-500",
+      hoverColor: "hover:shadow-red-500/30"
+    },
+    {
+      icon: <FaLinkedin />,
       title: "LINKEDIN",
       value: "Krish Solanki",
-      link: "https://www.linkedin.com/in/krish-solanki-648219365"
+      link: "https://www.linkedin.com/in/krish-solanki-648219365",
+      color: "from-blue-600 to-blue-400",
+      hoverColor: "hover:shadow-blue-500/30"
     },
     {
-      icon: <FaGithub className="text-xl text-gray-300" />,
+      icon: <FaGithub />,
       title: "GITHUB",
       value: "kakashi197",
-      link: "https://github.com/kakashi197"
+      link: "https://github.com/kakashi197",
+      color: "from-gray-700 to-gray-900",
+      hoverColor: "hover:shadow-gray-500/30"
     },
     {
-      icon: <FaTwitter className="text-xl text-sky-500" />,
+      icon: <FaTwitter />,
       title: "TWITTER",
-      value: "@yourhandle", // Replace with your Twitter
-      link: "#"
+      value: "@krishsolanki",
+      link: "https://twitter.com/krishsolanki",
+      color: "from-sky-400 to-blue-500",
+      hoverColor: "hover:shadow-sky-500/30"
+    },
+    {
+      icon: <FaTelegram />,
+      title: "TELEGRAM",
+      value: "@yourhandle",
+      link: "https://t.me/yourhandle",
+      color: "from-blue-400 to-blue-600",
+      hoverColor: "hover:shadow-blue-500/30"
     }
   ];
 
-  // Floating bubbles data
-  const bubbles = [
-    { size: 'w-64 h-64', color: 'bg-purple-600', position: 'top-10 left-10', animation: 'animate-float1' },
-    { size: 'w-80 h-80', color: 'bg-blue-500', position: 'bottom-20 right-20', animation: 'animate-float2' },
-    { size: 'w-96 h-96', color: 'bg-pink-600', position: 'top-1/3 right-1/4', animation: 'animate-float3' },
-    { size: 'w-72 h-72', color: 'bg-indigo-600', position: 'bottom-1/4 left-1/3', animation: 'animate-float4' },
-  ];
+  // Advanced animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.3
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 40, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 15
+      }
+    },
+    hover: {
+      y: -10,
+      scale: 1.05,
+      transition: {
+        type: "spring",
+        stiffness: 400,
+        damping: 10
+      }
+    },
+    tap: {
+      scale: 0.95
+    }
+  };
+
+  const socialVariants = {
+    hover: {
+      rotate: [0, 10, -10, 0],
+      scale: 1.1,
+      transition: {
+        duration: 0.6
+      }
+    },
+    tap: {
+      scale: 0.9
+    }
+  };
+
+  // Floating holographic cards effect
+  const FloatingCard = ({ children, delay = 0 }) => (
+    <motion.div
+      initial={{ y: 20, opacity: 0 }}
+      animate={{
+        y: [0, -15, 0],
+        opacity: 1
+      }}
+      transition={{
+        y: {
+          duration: 8 + Math.random() * 4,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay
+        },
+        opacity: { duration: 0.5 }
+      }}
+      className="absolute w-full h-full"
+    >
+      {children}
+    </motion.div>
+  );
 
   return (
-    <div id="contact" className="min-h-screen flex justify-center items-center p-4 md:p-8 relative overflow-hidden">
-      {/* Background Elements */}
+    <div id="contact" className="min-h-screen flex items-center justify-center py-16 px-4 relative overflow-hidden bg-gradient-to-br from-gray-900 via-purple-900 to-gray-800">
+      {/* Holographic background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-800 opacity-90"></div>
-        {bubbles.map((bubble, index) => (
-          <div
-            key={index}
-            className={`absolute ${bubble.size} ${bubble.color} ${bubble.position} ${bubble.animation} rounded-full filter blur-[80px] opacity-20`}
-          ></div>
-        ))}
+        {/* Animated gradient mesh */}
+        <div className="absolute inset-0 opacity-20" style={{
+          backgroundImage: `
+            radial-gradient(circle at 20% 30%, rgba(139, 92, 246, 0.4) 0%, transparent 40%),
+            radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.4) 0%, transparent 40%),
+            radial-gradient(circle at 40% 60%, rgba(236, 72, 153, 0.4) 0%, transparent 40%)
+          `,
+          backgroundBlendMode: 'overlay'
+        }}></div>
+
+        {/* Floating holographic cards */}
+        <FloatingCard delay={0.2}>
+          <div className="absolute top-1/4 left-1/5 w-64 h-64 bg-purple-600/10 rounded-xl filter blur-[80px]"></div>
+        </FloatingCard>
+        <FloatingCard delay={0.4}>
+          <div className="absolute bottom-1/3 right-1/4 w-72 h-72 bg-blue-500/10 rounded-xl filter blur-[90px]"></div>
+        </FloatingCard>
+        <FloatingCard delay={0.6}>
+          <div className="absolute top-1/3 right-1/3 w-56 h-56 bg-pink-600/10 rounded-xl filter blur-[70px]"></div>
+        </FloatingCard>
       </div>
 
-      {/* Floating Particles */}
-      {[...Array(30)].map((_, i) => (
-        <div
-          key={i}
-          className="absolute rounded-full bg-white"
-          style={{
-            width: Math.random() * 5 + 1 + 'px',
-            height: Math.random() * 5 + 1 + 'px',
-            left: Math.random() * 100 + '%',
-            top: Math.random() * 100 + '%',
-            opacity: Math.random() * 0.3 + 0.1,
-            animation: `float ${Math.random() * 20 + 10}s linear infinite`,
-            animationDelay: `${Math.random() * 5}s`
-          }}
-        />
-      ))}
-
-      {/* Main Content */}
+      {/* Main content */}
       <motion.div
-        className="w-full max-w-4xl p-6 md:p-10 backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-2xl relative z-10"
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="w-full max-w-6xl mx-auto relative z-10"
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
       >
-        {/* Decorative Elements */}
-        <div className="absolute -top-5 -left-5 w-20 h-20 border-t-2 border-l-2 border-purple-400 rounded-tl-2xl"></div>
-        <div className="absolute -bottom-5 -right-5 w-20 h-20 border-b-2 border-r-2 border-blue-400 rounded-br-2xl"></div>
-        
-        <div className="flex flex-col items-center text-center">
-          {/* Header */}
+        {/* Section header with animated gradient text */}
+        <div className="text-center mb-16 relative">
           <motion.h1 
-            className="text-3xl md:text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 mb-4"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
+            className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6"
+            variants={itemVariants}
           >
-            Get In Touch
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 animate-gradient-x">
+              Let's Create
+            </span>
+            <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 animate-gradient-x-reverse">
+              Something Amazing
+            </span>
           </motion.h1>
           
           <motion.p 
-            className="text-lg text-gray-300 mb-8 max-w-2xl"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
+            className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
+            variants={itemVariants}
           >
-            Feel free to reach out through any of these channels. I'm always open to discussing new projects or opportunities.
+            I'm passionate about building innovative solutions. Reach out through any channel below - let's turn ideas into reality!
           </motion.p>
+        </div>
 
-          {/* Contact Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
-            {contactDetails.map((item, index) => (
+        {/* Interactive contact cards grid */}
+        <motion.div 
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16"
+          variants={containerVariants}
+        >
+          {contactDetails.map((item, index) => (
+            <motion.a
+              key={index}
+              href={item.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`relative overflow-hidden rounded-2xl p-6 backdrop-blur-sm border border-white/10 ${item.hoverColor} transition-all duration-500 group`}
+              variants={itemVariants}
+              whileHover="hover"
+              whileTap="tap"
+              initial="hidden"
+              animate="visible"
+            >
+              {/* Animated gradient background */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-20 transition-opacity duration-500`}></div>
+              
+              {/* Holographic reflection effect */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-300" style={{
+                background: `linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 60%)`
+              }}></div>
+              
+              {/* Card content */}
+              <div className="relative z-10 flex flex-col items-center text-center h-full">
+                <div className={`p-4 mb-4 rounded-xl bg-gradient-to-br ${item.color} shadow-lg group-hover:shadow-xl transition-all duration-300`}>
+                  <span className="text-2xl text-white">{item.icon}</span>
+                </div>
+                <h3 className="text-sm font-medium text-gray-400 mb-1 uppercase tracking-wider">{item.title}</h3>
+                <p className="text-white font-semibold text-lg mb-3">{item.value}</p>
+                
+                {/* Animated send indicator */}
+                <motion.div 
+                  className="mt-auto opacity-0 group-hover:opacity-100"
+                  initial={{ x: -10 }}
+                  animate={{ x: 0 }}
+                  transition={{ 
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    duration: 1.5
+                  }}
+                >
+                  <IoMdSend className="text-xl text-white/80" />
+                </motion.div>
+              </div>
+            </motion.a>
+          ))}
+        </motion.div>
+
+        {/* Social links with advanced interactions */}
+        <motion.div 
+          className="flex flex-wrap justify-center gap-6"
+          variants={containerVariants}
+        >
+          {[
+            { 
+              icon: <FaLinkedin className="text-2xl" />, 
+              href: "https://www.linkedin.com/in/krish-solanki-648219365",
+              color: "bg-blue-600/20 hover:bg-blue-600/40",
+              tooltip: "Connect on LinkedIn"
+            },
+            { 
+              icon: <FaGithub className="text-2xl" />, 
+              href: "https://github.com/kakashi197",
+              color: "bg-gray-700/20 hover:bg-gray-700/40",
+              tooltip: "View my GitHub"
+            },
+            { 
+              icon: <FaTwitter className="text-2xl" />, 
+              href: "https://twitter.com/krishsolanki",
+              color: "bg-sky-600/20 hover:bg-sky-600/40",
+              tooltip: "Follow on Twitter"
+            },
+            { 
+              icon: <FaWhatsapp className="text-2xl" />, 
+              href: "https://wa.me/919876543210",
+              color: "bg-green-600/20 hover:bg-green-600/40",
+              tooltip: "Message on WhatsApp"
+            },
+            { 
+              icon: <FaTelegram className="text-2xl" />, 
+              href: "https://t.me/yourhandle",
+              color: "bg-blue-500/20 hover:bg-blue-500/40",
+              tooltip: "Contact on Telegram"
+            },
+            { 
+              icon: <FaDiscord className="text-2xl" />, 
+              href: "#",
+              color: "bg-indigo-600/20 hover:bg-indigo-600/40",
+              tooltip: "Join my Discord"
+            }
+          ].map((social, index) => (
+            <motion.div
+              key={index}
+              className="relative group"
+              variants={itemVariants}
+              whileHover="hover"
+              whileTap="tap"
+            >
               <motion.a
-                key={index}
-                href={item.link}
+                href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-gray-800/50 hover:bg-gray-700/70 border border-gray-700 rounded-xl p-6 transition-all duration-300 hover:shadow-lg hover:scale-[1.02]"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 + index * 0.1 }}
-                whileHover={{ y: -5 }}
+                className={`p-4 rounded-2xl ${social.color} border border-white/10 backdrop-blur-sm transition-all duration-300`}
+                variants={socialVariants}
+                aria-label={social.tooltip}
               >
-                <div className="flex flex-col items-center text-center">
-                  <div className="p-3 bg-gradient-to-br from-purple-600 to-blue-500 rounded-full mb-4">
-                    {item.icon}
-                  </div>
-                  <h3 className="text-gray-400 text-sm font-medium mb-1">{item.title}</h3>
-                  <p className="text-white font-medium">{item.value}</p>
-                </div>
+                {social.icon}
               </motion.a>
-            ))}
-          </div>
+              
+              {/* Animated tooltip */}
+              <motion.div 
+                className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-gray-800 text-white text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity"
+                initial={{ y: 5 }}
+                animate={{ y: 0 }}
+              >
+                {social.tooltip}
+                <div className="absolute top-full left-1/2 w-2 h-2 bg-gray-800 transform -translate-x-1/2 rotate-45"></div>
+              </motion.div>
+            </motion.div>
+          ))}
+        </motion.div>
 
-          {/* Social Links */}
-          <motion.div 
-            className="flex gap-6 mt-12"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
-          >
-            <a 
-              href="https://www.linkedin.com/in/krish-solanki-648219365" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="p-3 bg-blue-600/20 hover:bg-blue-600/30 rounded-full transition-all"
-              aria-label="LinkedIn"
-            >
-              <FaLinkedin className="text-2xl text-blue-400" />
-            </a>
-            <a 
-              href="https://github.com/kakashi197" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="p-3 bg-gray-700/20 hover:bg-gray-700/30 rounded-full transition-all"
-              aria-label="GitHub"
-            >
-              <FaGithub className="text-2xl text-gray-300" />
-            </a>
-            <a 
-              href="#" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="p-3 bg-sky-600/20 hover:bg-sky-600/30 rounded-full transition-all"
-              aria-label="Twitter"
-            >
-              <FaTwitter className="text-2xl text-sky-400" />
-            </a>
-          </motion.div>
-        </div>
+        {/* Creative call-to-action */}
+        <motion.div 
+          className="mt-16 text-center"
+          variants={itemVariants}
+        >
+          <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer">
+            <RiLightbulbFlashFill className="text-xl group-hover:animate-pulse" />
+            <span className="font-medium">Got an exciting project? Let's discuss!</span>
+          </div>
+        </motion.div>
       </motion.div>
 
-      {/* Global Styles for Animations */}
+      {/* Global animations */}
       <style jsx global>{`
-        @keyframes float {
-          0% { transform: translateY(0) translateX(0); }
-          50% { transform: translateY(-100px) translateX(20px); }
-          100% { transform: translateY(0) translateX(0); }
+        @keyframes gradient-x {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
         }
-        .animate-float1 {
-          animation: float 15s ease-in-out infinite;
+        @keyframes gradient-x-reverse {
+          0% { background-position: 100% 50%; }
+          50% { background-position: 0% 50%; }
+          100% { background-position: 100% 50%; }
         }
-        .animate-float2 {
-          animation: float 18s ease-in-out infinite reverse;
+        .animate-gradient-x {
+          background-size: 200% 200%;
+          animation: gradient-x 8s ease infinite;
         }
-        .animate-float3 {
-          animation: float 20s ease-in-out infinite;
-        }
-        .animate-float4 {
-          animation: float 16s ease-in-out infinite reverse;
+        .animate-gradient-x-reverse {
+          background-size: 200% 200%;
+          animation: gradient-x-reverse 8s ease infinite;
         }
       `}</style>
     </div>
