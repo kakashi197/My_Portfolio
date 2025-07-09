@@ -1,6 +1,6 @@
 import project1 from "../assets/projects/Online notes app.png";
 import project2 from "../assets/projects/Weather App.png";
-import project3 from "../assets/projects/project-3.jpg";
+import project3 from "../assets/github.png"
 import project4 from "../assets/projects/project-4.jpg";
 
 export const HERO_CONTENT = `I am a passionate full stack developer with a knack for crafting robust and scalable web applications. With 5 years of hands-on experience, I have honed my skills in front-end technologies like React and Next.js, as well as back-end technologies like Node.js, MySQL, PostgreSQL, and MongoDB. My goal is to leverage my expertise to create innovative solutions that drive business growth and deliver exceptional user experiences.`;
@@ -44,6 +44,15 @@ export const PROJECTS = [
     github: "https://github.com/kakashi197/WeatherApp",
     liveDemo: "https://kakashi197.github.io/WeatherApp/",
   },
+  {
+  title: "GitHub Account Explorer", // Or a more specific name, e.g., "React File Explorer"
+  image: project3, // Replace with the actual path to your project's screenshot/GIF
+  description:
+    "A dynamic web application built with React.js, allowing users to browse, search, and manage a hierarchical data structure (e.g., files/folders, categories). It features a responsive UI, efficient data handling, and interactive user experience.",
+  technologies: ["React.js", "JavaScript", "HTML", "CSS", "Responsive Design"], // Add other libraries/frameworks if used (e.g., "Redux", "Tailwind CSS")
+  github: "https://github.com/kakashi197/github-profile-explorer", // Replace with the actual GitHub repository link
+  liveDemo: "https://github-profile-explorer-rho.vercel.app/", // Replace with the actual live demo link (e.g., GitHub Pages, Netlify, Vercel)
+},
   
 
 ];
