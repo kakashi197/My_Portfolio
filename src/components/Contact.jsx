@@ -370,381 +370,247 @@
 
 
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { 
-  FaLinkedin, 
-  FaGithub, 
-  FaTwitter, 
-  FaMapMarkerAlt, 
-  FaPhone, 
-  FaEnvelope,
-  FaWhatsapp,
-  FaTelegram,
-  FaDiscord
-} from 'react-icons/fa';
-import { IoMdSend } from 'react-icons/io';
-import { RiLightbulbFlashFill } from 'react-icons/ri';
 
-const ContactInfo = () => {
-  // Enhanced contact details with more options
-  const contactDetails = [
-    {
-      icon: <FaEnvelope />,
-      title: "EMAIL",
-      value: "kksolanki2325@gmail.com",
-      link: "mailto:kksolanki2325@gmail.com",
-      color: "from-purple-500 to-pink-500",
-      hoverColor: "hover:shadow-purple-500/30"
-    },
-    {
-      icon: <FaPhone />,
-      title: "PHONE",
-      value: "+91 98765 43210",
-      link: "tel:+919876543210",
-      color: "from-blue-500 to-cyan-500",
-      hoverColor: "hover:shadow-blue-500/30"
-    },
-    {
-      icon: <FaWhatsapp />,
-      title: "WHATSAPP",
-      value: "Chat instantly",
-      link: "https://wa.me/919876543210",
-      color: "from-green-500 to-teal-500",
-      hoverColor: "hover:shadow-green-500/30"
-    },
-    {
-      icon: <FaMapMarkerAlt />,
-      title: "LOCATION",
-      value: "Ahmedabad, India",
-      link: "https://maps.app.goo.gl/YourLocationLink",
-      color: "from-red-500 to-orange-500",
-      hoverColor: "hover:shadow-red-500/30"
-    },
-    {
-      icon: <FaLinkedin />,
-      title: "LINKEDIN",
-      value: "Krish Solanki",
-      link: "https://www.linkedin.com/in/krish-solanki-648219365",
-      color: "from-blue-600 to-blue-400",
-      hoverColor: "hover:shadow-blue-500/30"
-    },
-    {
-      icon: <FaGithub />,
-      title: "GITHUB",
-      value: "kakashi197",
-      link: "https://github.com/kakashi197",
-      color: "from-gray-700 to-gray-900",
-      hoverColor: "hover:shadow-gray-500/30"
-    },
-    {
-      icon: <FaTwitter />,
-      title: "TWITTER",
-      value: "@krishsolanki",
-      link: "https://twitter.com/krishsolanki",
-      color: "from-sky-400 to-blue-500",
-      hoverColor: "hover:shadow-sky-500/30"
-    },
-    {
-      icon: <FaTelegram />,
-      title: "TELEGRAM",
-      value: "@yourhandle",
-      link: "https://t.me/yourhandle",
-      color: "from-blue-400 to-blue-600",
-      hoverColor: "hover:shadow-blue-500/30"
-    }
-  ];
+import { useState } from 'react';
+import { Client, Databases, ID } from 'appwrite';
 
-  // Advanced animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.3
-      }
+const ContactForm = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const client = new Client()
+      .setEndpoint('https://cloud.appwrite.io/v1')
+      .setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID);
+
+    const databases = new Databases(client);
+
+    try {
+      await databases.createDocument(
+        import.meta.env.VITE_APPWRITE_DATABASE_ID,
+        import.meta.env.VITE_APPWRITE_COLLECTION_ID,
+        ID.unique(),
+        formData
+      );
+      
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', message: '' });
+    } catch (error) {
+      console.error('Error:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+      setTimeout(() => setSubmitStatus(null), 5000);
     }
   };
-
-  const itemVariants = {
-    hidden: { y: 40, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 15
-      }
-    },
-    hover: {
-      y: -10,
-      scale: 1.05,
-      transition: {
-        type: "spring",
-        stiffness: 400,
-        damping: 10
-      }
-    },
-    tap: {
-      scale: 0.95
-    }
-  };
-
-  const socialVariants = {
-    hover: {
-      rotate: [0, 10, -10, 0],
-      scale: 1.1,
-      transition: {
-        duration: 0.6
-      }
-    },
-    tap: {
-      scale: 0.9
-    }
-  };
-
-  // Floating holographic cards effect
-  const FloatingCard = ({ children, delay = 0 }) => (
-    <motion.div
-      initial={{ y: 20, opacity: 0 }}
-      animate={{
-        y: [0, -15, 0],
-        opacity: 1
-      }}
-      transition={{
-        y: {
-          duration: 8 + Math.random() * 4,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay
-        },
-        opacity: { duration: 0.5 }
-      }}
-      className="absolute w-full h-full"
-    >
-      {children}
-    </motion.div>
-  );
 
   return (
-    <div id="contact" className="min-h-screen flex items-center justify-center py-16 px-4 relative overflow-hidden bg-gradient-to-br from-gray-900 via-purple-900 to-gray-800">
-      {/* Holographic background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Animated gradient mesh */}
-        <div className="absolute inset-0 opacity-20" style={{
-          backgroundImage: `
-            radial-gradient(circle at 20% 30%, rgba(139, 92, 246, 0.4) 0%, transparent 40%),
-            radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.4) 0%, transparent 40%),
-            radial-gradient(circle at 40% 60%, rgba(236, 72, 153, 0.4) 0%, transparent 40%)
-          `,
-          backgroundBlendMode: 'overlay'
-        }}></div>
-
-        {/* Floating holographic cards */}
-        <FloatingCard delay={0.2}>
-          <div className="absolute top-1/4 left-1/5 w-64 h-64 bg-purple-600/10 rounded-xl filter blur-[80px]"></div>
-        </FloatingCard>
-        <FloatingCard delay={0.4}>
-          <div className="absolute bottom-1/3 right-1/4 w-72 h-72 bg-blue-500/10 rounded-xl filter blur-[90px]"></div>
-        </FloatingCard>
-        <FloatingCard delay={0.6}>
-          <div className="absolute top-1/3 right-1/3 w-56 h-56 bg-pink-600/10 rounded-xl filter blur-[70px]"></div>
-        </FloatingCard>
-      </div>
-
-      {/* Main content */}
-      <motion.div
-        className="w-full max-w-6xl mx-auto relative z-10"
-        initial="hidden"
-        animate="visible"
-        variants={containerVariants}
-      >
-        {/* Section header with animated gradient text */}
-        <div className="text-center mb-16 relative">
-          <motion.h1 
-            className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6"
-            variants={itemVariants}
-          >
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 animate-gradient-x">
-              Let's Create
-            </span>
-            <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 animate-gradient-x-reverse">
-              Something Amazing
-            </span>
-          </motion.h1>
-          
-          <motion.p 
-            className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
-            variants={itemVariants}
-          >
-            I'm passionate about building innovative solutions. Reach out through any channel below - let's turn ideas into reality!
-          </motion.p>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-3xl mx-auto">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
+            Get In Touch
+          </h1>
+          <p className="mt-5 max-w-xl mx-auto text-xl text-gray-500">
+            Have a project in mind or want to say hello? Fill out the form below and I'll get back to you soon.
+          </p>
         </div>
-
-        {/* Interactive contact cards grid */}
-        <motion.div 
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16"
-          variants={containerVariants}
-        >
-          {contactDetails.map((item, index) => (
-            <motion.a
-              key={index}
-              href={item.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`relative overflow-hidden rounded-2xl p-6 backdrop-blur-sm border border-white/10 ${item.hoverColor} transition-all duration-500 group`}
-              variants={itemVariants}
-              whileHover="hover"
-              whileTap="tap"
-              initial="hidden"
-              animate="visible"
-            >
-              {/* Animated gradient background */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-20 transition-opacity duration-500`}></div>
-              
-              {/* Holographic reflection effect */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-300" style={{
-                background: `linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 60%)`
-              }}></div>
-              
-              {/* Card content */}
-              <div className="relative z-10 flex flex-col items-center text-center h-full">
-                <div className={`p-4 mb-4 rounded-xl bg-gradient-to-br ${item.color} shadow-lg group-hover:shadow-xl transition-all duration-300`}>
-                  <span className="text-2xl text-white">{item.icon}</span>
-                </div>
-                <h3 className="text-sm font-medium text-gray-400 mb-1 uppercase tracking-wider">{item.title}</h3>
-                <p className="text-white font-semibold text-lg mb-3">{item.value}</p>
-                
-                {/* Animated send indicator */}
-                <motion.div 
-                  className="mt-auto opacity-0 group-hover:opacity-100"
-                  initial={{ x: -10 }}
-                  animate={{ x: 0 }}
-                  transition={{ 
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    duration: 1.5
-                  }}
-                >
-                  <IoMdSend className="text-xl text-white/80" />
-                </motion.div>
+        
+        <div className="bg-white shadow-xl rounded-2xl overflow-hidden">
+          <div className="md:flex">
+            {/* Left Side - Contact Info */}
+            <div className="md:w-1/3 bg-gradient-to-b from-indigo-600 to-blue-600 p-8 text-white">
+              <div className="mb-8">
+                <h2 className="text-2xl font-bold mb-4">Contact Information</h2>
+                <p className="text-blue-100">
+                  Fill out the form or reach out through these channels:
+                </p>
               </div>
-            </motion.a>
-          ))}
-        </motion.div>
-
-        {/* Social links with advanced interactions */}
-        <motion.div 
-          className="flex flex-wrap justify-center gap-6"
-          variants={containerVariants}
-        >
-          {[
-            { 
-              icon: <FaLinkedin className="text-2xl" />, 
-              href: "https://www.linkedin.com/in/krish-solanki-648219365",
-              color: "bg-blue-600/20 hover:bg-blue-600/40",
-              tooltip: "Connect on LinkedIn"
-            },
-            { 
-              icon: <FaGithub className="text-2xl" />, 
-              href: "https://github.com/kakashi197",
-              color: "bg-gray-700/20 hover:bg-gray-700/40",
-              tooltip: "View my GitHub"
-            },
-            { 
-              icon: <FaTwitter className="text-2xl" />, 
-              href: "https://twitter.com/krishsolanki",
-              color: "bg-sky-600/20 hover:bg-sky-600/40",
-              tooltip: "Follow on Twitter"
-            },
-            { 
-              icon: <FaWhatsapp className="text-2xl" />, 
-              href: "https://wa.me/919876543210",
-              color: "bg-green-600/20 hover:bg-green-600/40",
-              tooltip: "Message on WhatsApp"
-            },
-            { 
-              icon: <FaTelegram className="text-2xl" />, 
-              href: "https://t.me/yourhandle",
-              color: "bg-blue-500/20 hover:bg-blue-500/40",
-              tooltip: "Contact on Telegram"
-            },
-            { 
-              icon: <FaDiscord className="text-2xl" />, 
-              href: "#",
-              color: "bg-indigo-600/20 hover:bg-indigo-600/40",
-              tooltip: "Join my Discord"
-            }
-          ].map((social, index) => (
-            <motion.div
-              key={index}
-              className="relative group"
-              variants={itemVariants}
-              whileHover="hover"
-              whileTap="tap"
-            >
-              <motion.a
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`p-4 rounded-2xl ${social.color} border border-white/10 backdrop-blur-sm transition-all duration-300`}
-                variants={socialVariants}
-                aria-label={social.tooltip}
-              >
-                {social.icon}
-              </motion.a>
               
-              {/* Animated tooltip */}
-              <motion.div 
-                className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 bg-gray-800 text-white text-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity"
-                initial={{ y: 5 }}
-                animate={{ y: 0 }}
-              >
-                {social.tooltip}
-                <div className="absolute top-full left-1/2 w-2 h-2 bg-gray-800 transform -translate-x-1/2 rotate-45"></div>
-              </motion.div>
-            </motion.div>
-          ))}
-        </motion.div>
+              <div className="space-y-4">
+                <div className="flex items-start">
+                  <div className="flex-shrink-0 bg-blue-500 rounded-md p-2">
+                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-sm font-medium text-blue-200">Email</p>
+                    <p className="text-sm text-white">contact@example.com</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start">
+                  <div className="flex-shrink-0 bg-blue-500 rounded-md p-2">
+                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-sm font-medium text-blue-200">Phone</p>
+                    <p className="text-sm text-white">+1 (555) 123-4567</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start">
+                  <div className="flex-shrink-0 bg-blue-500 rounded-md p-2">
+                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-sm font-medium text-blue-200">Location</p>
+                    <p className="text-sm text-white">123 Main St, City</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-8">
+                <h3 className="text-lg font-medium mb-4">Follow Me</h3>
+                <div className="flex space-x-4">
+                  <a href="#" className="text-blue-200 hover:text-white">
+                    <span className="sr-only">Twitter</span>
+                    <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                    </svg>
+                  </a>
+                  <a href="#" className="text-blue-200 hover:text-white">
+                    <span className="sr-only">GitHub</span>
+                    <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                      <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+                    </svg>
+                  </a>
+                  <a href="#" className="text-blue-200 hover:text-white">
+                    <span className="sr-only">LinkedIn</span>
+                    <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            {/* Right Side - Contact Form */}
+            <div className="md:w-2/3 p-8">
+              {submitStatus === 'success' && (
+                <div className="mb-6 p-4 bg-green-50 text-green-700 rounded-lg border border-green-200">
+                  <div className="flex items-center">
+                    <svg className="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="font-medium">Thank you!</span>
+                  </div>
+                  <p className="mt-1 text-sm">Your message has been sent successfully. I'll get back to you soon.</p>
+                </div>
+              )}
+              
+              {submitStatus === 'error' && (
+                <div className="mb-6 p-4 bg-red-50 text-red-700 rounded-lg border border-red-200">
+                  <div className="flex items-center">
+                    <svg className="h-5 w-5 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span className="font-medium">Oops!</span>
+                  </div>
+                  <p className="mt-1 text-sm">Something went wrong. Please try again later.</p>
+                </div>
+              )}
+              
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                    Full Name
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      id="name"
+                      value={formData.name}
+                      onChange={(e) => setFormData({...formData, name: e.target.value})}
+                      className="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 transition duration-200"
+                      placeholder="John Doe"
+                      required
+                    />
+                    <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                      <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
 
-        {/* Creative call-to-action */}
-        <motion.div 
-          className="mt-16 text-center"
-          variants={itemVariants}
-        >
-          <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer">
-            <RiLightbulbFlashFill className="text-xl group-hover:animate-pulse" />
-            <span className="font-medium">Got an exciting project? Let's discuss!</span>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                    Email Address
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="email"
+                      id="email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({...formData, email: e.target.value})}
+                      className="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 transition duration-200"
+                      placeholder="you@example.com"
+                      required
+                    />
+                    <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                      <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                    Your Message
+                  </label>
+                  <textarea
+                    id="message"
+                    rows="5"
+                    value={formData.message}
+                    onChange={(e) => setFormData({...formData, message: e.target.value})}
+                    className="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 transition duration-200"
+                    placeholder="Hello, I'd like to talk about..."
+                    required
+                  />
+                </div>
+
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className={`w-full flex justify-center items-center px-6 py-3.5 text-base font-medium rounded-lg text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Sending...
+                      </>
+                    ) : (
+                      'Send Message'
+                    )}
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
-        </motion.div>
-      </motion.div>
-
-      {/* Global animations */}
-      <style jsx global>{`
-        @keyframes gradient-x {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        @keyframes gradient-x-reverse {
-          0% { background-position: 100% 50%; }
-          50% { background-position: 0% 50%; }
-          100% { background-position: 100% 50%; }
-        }
-        .animate-gradient-x {
-          background-size: 200% 200%;
-          animation: gradient-x 8s ease infinite;
-        }
-        .animate-gradient-x-reverse {
-          background-size: 200% 200%;
-          animation: gradient-x-reverse 8s ease infinite;
-        }
-      `}</style>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default ContactInfo;
+export default ContactForm;

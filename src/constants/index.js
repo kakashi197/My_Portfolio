@@ -48,7 +48,7 @@ export const PROJECTS = [
   title: "GitHub Account Explorer", // Or a more specific name, e.g., "React File Explorer"
   image: project3, // Replace with the actual path to your project's screenshot/GIF
   description:
-    "A dynamic web application built with React.js, allowing users to browse, search, and manage a hierarchical data structure (e.g., files/folders, categories). It features a responsive UI, efficient data handling, and interactive user experience.",
+    "A dynamic React.js web app for Browse, searching, and managing Gihub data",
   technologies: ["React.js", "JavaScript", "HTML", "CSS", "Responsive Design"], // Add other libraries/frameworks if used (e.g., "Redux", "Tailwind CSS")
   github: "https://github.com/kakashi197/github-profile-explorer", // Replace with the actual GitHub repository link
   liveDemo: "https://github-profile-explorer-rho.vercel.app/", // Replace with the actual live demo link (e.g., GitHub Pages, Netlify, Vercel)
