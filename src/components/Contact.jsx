@@ -369,7 +369,7 @@
 import { useState } from 'react';
 import { Client, Databases, ID } from 'appwrite';
 
-const ContactForm = () => {
+const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -608,5 +608,5 @@ const ContactForm = () => {
   );
 };
 
-export default ContactForm;
+export default Contact;
 
