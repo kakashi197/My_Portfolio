@@ -367,8 +367,6 @@
 
 // export default Contact;
 
-
-
 import React, { useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, User, MessageSquare, Send, Loader2, XCircle, CheckCircle, Twitter, Github, Linkedin } from 'lucide-react';
 import { initializeApp } from 'firebase/app';
@@ -722,3 +720,4 @@ const ContactForm = () => {
 };
 
 export default ContactForm;
+
