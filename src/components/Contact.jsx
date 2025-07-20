@@ -366,13 +366,8 @@
 // };
 
 // export default Contact;
-
-import React, { useState, useEffect } from 'react';
-import { Mail, Phone, MapPin, User, MessageSquare, Send, Loader2, XCircle, CheckCircle, Twitter, Github, Linkedin } from 'lucide-react';
-import { initializeApp } from 'firebase/app';
-import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from 'firebase/auth';
-import { getFirestore, doc, addDoc, collection } from 'firebase/firestore';
-
+import { useState } from 'react';
+import { Client, Databases, ID } from 'appwrite';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -381,337 +376,231 @@ const ContactForm = () => {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', null
-
-  // Firebase state variables
-  const [db, setDb] = useState(null);
-  const [auth, setAuth] = useState(null);
-  const [userId, setUserId] = useState(null);
-  const [isAuthReady, setIsAuthReady] = useState(false);
-
-  // Initialize Firebase and authenticate
-  useEffect(() => {
-    try {
-      const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-      const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-
-      if (Object.keys(firebaseConfig).length === 0) {
-        console.error("Firebase config is missing. Please ensure __firebase_config is provided.");
-        return;
-      }
-
-      const app = initializeApp(firebaseConfig);
-      const firestoreDb = getFirestore(app);
-      const firebaseAuth = getAuth(app);
-
-      setDb(firestoreDb);
-      setAuth(firebaseAuth);
-
-      const unsubscribe = onAuthStateChanged(firebaseAuth, async (user) => {
-        if (user) {
-          setUserId(user.uid);
-        } else {
-          // Sign in anonymously if no user is authenticated
-          try {
-            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-              await signInWithCustomToken(firebaseAuth, __initial_auth_token);
-            } else {
-              await signInAnonymously(firebaseAuth);
-            }
-            setUserId(firebaseAuth.currentUser?.uid || crypto.randomUUID()); // Fallback for anonymous
-          } catch (error) {
-            console.error("Firebase authentication failed:", error);
-            setSubmitStatus('error');
-          }
-        }
-        setIsAuthReady(true);
-      });
-
-      return () => unsubscribe();
-    } catch (error) {
-      console.error("Failed to initialize Firebase:", error);
-      setSubmitStatus('error');
-    }
-  }, []); // Run only once on component mount
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const [submitStatus, setSubmitStatus] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setSubmitStatus(null); // Clear previous status
 
-    if (!db || !userId) {
-      console.error("Firebase not initialized or user not authenticated.");
-      setSubmitStatus('error');
-      setIsSubmitting(false);
-      return;
-    }
+    const client = new Client()
+      .setEndpoint('https://cloud.appwrite.io/v1')
+      .setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID);
+
+    const databases = new Databases(client);
 
     try {
-      // Define the collection path for public data
-      const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-      const collectionPath = `artifacts/${appId}/public/data/contact_messages`;
-
-      await addDoc(collection(db, collectionPath), {
-        ...formData,
-        timestamp: new Date(),
-        userId: userId // Store the user ID for reference
-      });
+      await databases.createDocument(
+        import.meta.env.VITE_APPWRITE_DATABASE_ID,
+        import.meta.env.VITE_APPWRITE_COLLECTION_ID,
+        ID.unique(),
+        formData
+      );
       
       setSubmitStatus('success');
-      setFormData({ name: '', email: '', message: '' }); // Clear form
+      setFormData({ name: '', email: '', message: '' });
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error('Error:', error);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
-      setTimeout(() => setSubmitStatus(null), 5000); // Hide status after 5 seconds
+      setTimeout(() => setSubmitStatus(null), 5000);
     }
   };
 
-  // Floating bubbles data for background animation
-  const bubbles = [
-    { size: 'w-64 h-64', color: 'bg-purple-600', position: 'top-10 left-10', animation: 'animate-float1' },
-    { size: 'w-80 h-80', color: 'bg-blue-500', position: 'bottom-20 right-20', animation: 'animate-float2' },
-    { size: 'w-96 h-96', color: 'bg-pink-600', position: 'top-1/3 right-1/4', animation: 'animate-float3' },
-    { size: 'w-72 h-72', color: 'bg-indigo-600', position: 'bottom-1/4 left-1/3', animation: 'animate-float4' },
-  ];
-
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 md:p-8 relative overflow-hidden font-inter">
-      {/* Global CSS for animations */}
-      <style>{`
-        @keyframes float {
-          0% { transform: translateY(0) translateX(0); }
-          50% { transform: translateY(-100px) translateX(20px); }
-          100% { transform: translateY(0) translateX(0); }
-        }
-        .animate-float1 { animation: float 15s ease-in-out infinite; }
-        .animate-float2 { animation: float 18s ease-in-out infinite reverse; }
-        .animate-float3 { animation: float 20s ease-in-out infinite; }
-        .animate-float4 { animation: float 16s ease-in-out infinite reverse; }
-
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fadeIn { animation: fadeIn 0.6s ease-out forwards; }
-      `}</style>
-
-      {/* Background Elements */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-black opacity-95"></div>
-      {bubbles.map((bubble, index) => (
-        <div
-          key={index}
-          className={`absolute ${bubble.size} ${bubble.color} ${bubble.position} ${bubble.animation} rounded-full filter blur-[80px] opacity-20`}
-        ></div>
-      ))}
-
-      {/* Floating Particles */}
-      {[...Array(30)].map((_, i) => (
-        <div
-          key={i}
-          className="absolute rounded-full bg-white"
-          style={{
-            width: Math.random() * 5 + 1 + 'px',
-            height: Math.random() * 5 + 1 + 'px',
-            left: Math.random() * 100 + '%',
-            top: Math.random() * 100 + '%',
-            opacity: Math.random() * 0.3 + 0.1,
-            animation: `float ${Math.random() * 20 + 10}s linear infinite`,
-            animationDelay: `${Math.random() * 5}s`
-          }}
-        />
-      ))}
-
-      {/* Main Content Container */}
-      <div className="relative z-10 w-full max-w-4xl p-6 md:p-10 backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-2xl animate-fadeIn">
-        {/* Decorative Corner Elements */}
-        <div className="absolute -top-5 -left-5 w-20 h-20 border-t-2 border-l-2 border-purple-400 rounded-tl-2xl opacity-70"></div>
-        <div className="absolute -bottom-5 -right-5 w-20 h-20 border-b-2 border-r-2 border-blue-400 rounded-br-2xl opacity-70"></div>
-
-        <div className="flex flex-col md:flex-row gap-8">
-          {/* Left Side - Contact Info */}
-          <div className="w-full md:w-1/3 space-y-8 text-white">
-            <div>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 mb-2">
-                Let's Connect
-              </h1>
-              <p className="text-base md:text-lg text-gray-300">
-                Have a project in mind or want to discuss opportunities? I'd love to hear from you.
-              </p>
-            </div>
-
-            <div className="space-y-6">
-              <div className="flex items-center gap-4">
-                <div className="p-3 bg-purple-500/10 rounded-full shadow-md">
-                  <Mail className="text-xl md:text-2xl text-purple-400" />
-                </div>
-                <div>
-                  <h3 className="text-gray-400 text-xs md:text-sm">EMAIL</h3>
-                  <a href="mailto:contact@example.com" className="text-white hover:text-purple-300 transition text-sm md:text-base">contact@example.com</a>
-                </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-3xl mx-auto">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
+            Get In Touch
+          </h1>
+          <p className="mt-5 max-w-xl mx-auto text-xl text-gray-500">
+            Have a project in mind or want to say hello? Fill out the form below and I'll get back to you soon.
+          </p>
+        </div>
+        
+        <div className="bg-white shadow-xl rounded-2xl overflow-hidden">
+          <div className="md:flex">
+            {/* Left Side - Contact Info */}
+            <div className="md:w-1/3 bg-gradient-to-b from-indigo-600 to-blue-600 p-8 text-white">
+              <div className="mb-8">
+                <h2 className="text-2xl font-bold mb-4">Contact Information</h2>
+                <p className="text-blue-100">
+                  Fill out the form or reach out through these channels:
+                </p>
               </div>
-
-              <div className="flex items-center gap-4">
-                <div className="p-3 bg-blue-500/10 rounded-full shadow-md">
-                  <Phone className="text-xl md:text-2xl text-blue-400" />
-                </div>
-                <div>
-                  <h3 className="text-gray-400 text-xs md:text-sm">PHONE</h3>
-                  <p className="text-white text-sm md:text-base">+1 (555) 123-4567</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <div className="p-3 bg-pink-500/10 rounded-full shadow-md">
-                  <MapPin className="text-xl md:text-2xl text-pink-400" />
-                </div>
-                <div>
-                  <h3 className="text-gray-400 text-xs md:text-sm">LOCATION</h3>
-                  <p className="text-white text-sm md:text-base">123 Main St, City</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <div className="p-3 bg-indigo-500/10 rounded-full shadow-md">
-                  <MessageSquare className="text-xl md:text-2xl text-indigo-400" />
-                </div>
-                <div>
-                  <h3 className="text-gray-400 text-xs md:text-sm">SOCIAL</h3>
-                  <div className="flex gap-3 mt-1">
-                    <a href="#" className="text-gray-300 hover:text-blue-400 transition transform hover:scale-110">
-                      <Linkedin className="text-lg md:text-xl" />
-                    </a>
-                    <a href="#" className="text-gray-300 hover:text-gray-100 transition transform hover:scale-110">
-                      <Github className="text-lg md:text-xl" />
-                    </a>
-                    <a href="#" className="text-gray-300 hover:text-sky-400 transition transform hover:scale-110">
-                      <Twitter className="text-lg md:text-xl" />
-                    </a>
+              
+              <div className="space-y-4">
+                <div className="flex items-start">
+                  <div className="flex-shrink-0 bg-blue-500 rounded-md p-2">
+                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
                   </div>
+                  <div className="ml-3">
+                    <p className="text-sm font-medium text-blue-200">Email</p>
+                    <p className="text-sm text-white">contact@example.com</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start">
+                  <div className="flex-shrink-0 bg-blue-500 rounded-md p-2">
+                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-sm font-medium text-blue-200">Phone</p>
+                    <p className="text-sm text-white">+1 (555) 123-4567</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start">
+                  <div className="flex-shrink-0 bg-blue-500 rounded-md p-2">
+                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-sm font-medium text-blue-200">Location</p>
+                    <p className="text-sm text-white">123 Main St, City</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-8">
+                <h3 className="text-lg font-medium mb-4">Follow Me</h3>
+                <div className="flex space-x-4">
+                  <a href="#" className="text-blue-200 hover:text-white">
+                    <span className="sr-only">Twitter</span>
+                    <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                    </svg>
+                  </a>
+                  <a href="#" className="text-blue-200 hover:text-white">
+                    <span className="sr-only">GitHub</span>
+                    <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                      <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+                    </svg>
+                  </a>
+                  <a href="#" className="text-blue-200 hover:text-white">
+                    <span className="sr-only">LinkedIn</span>
+                    <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                    </svg>
+                  </a>
                 </div>
               </div>
             </div>
-          </div>
-
-          {/* Right Side - Contact Form */}
-          <div className="w-full md:w-2/3">
-            {submitStatus === 'success' && (
-              <div className="mb-6 p-4 bg-green-500/20 text-green-300 rounded-lg border border-green-400 animate-fadeIn">
-                <div className="flex items-center">
-                  <CheckCircle className="h-5 w-5 text-green-400 mr-2" />
-                  <span className="font-medium">Success!</span>
-                </div>
-                <p className="mt-1 text-sm">Your message has been sent successfully. I'll get back to you soon.</p>
-              </div>
-            )}
             
-            {submitStatus === 'error' && (
-              <div className="mb-6 p-4 bg-red-500/20 text-red-300 rounded-lg border border-red-400 animate-fadeIn">
-                <div className="flex items-center">
-                  <XCircle className="h-5 w-5 text-red-400 mr-2" />
-                  <span className="font-medium">Oops!</span>
+            {/* Right Side - Contact Form */}
+            <div className="md:w-2/3 p-8">
+              {submitStatus === 'success' && (
+                <div className="mb-6 p-4 bg-green-50 text-green-700 rounded-lg border border-green-200">
+                  <div className="flex items-center">
+                    <svg className="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="font-medium">Thank you!</span>
+                  </div>
+                  <p className="mt-1 text-sm">Your message has been sent successfully. I'll get back to you soon.</p>
                 </div>
-                <p className="mt-1 text-sm">Something went wrong. Please try again later.</p>
-              </div>
-            )}
-            
-            <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                  Full Name
-                </label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="block w-full px-4 py-2 md:py-3 rounded-lg bg-gray-800/50 border border-gray-700 text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder-gray-500 transition-all duration-300 pl-12"
-                    placeholder="John Doe"
-                    required
-                  />
-                  <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-                    <User className="h-5 w-5" />
+              )}
+              
+              {submitStatus === 'error' && (
+                <div className="mb-6 p-4 bg-red-50 text-red-700 rounded-lg border border-red-200">
+                  <div className="flex items-center">
+                    <svg className="h-5 w-5 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span className="font-medium">Oops!</span>
+                  </div>
+                  <p className="mt-1 text-sm">Something went wrong. Please try again later.</p>
+                </div>
+              )}
+              
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                    Full Name
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      id="name"
+                      value={formData.name}
+                      onChange={(e) => setFormData({...formData, name: e.target.value})}
+                      className="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 transition duration-200"
+                      placeholder="John Doe"
+                      required
+                    />
+                    <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                      <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                  Email Address
-                </label>
-                <div className="relative">
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="block w-full px-4 py-2 md:py-3 rounded-lg bg-gray-800/50 border border-gray-700 text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-500 transition-all duration-300 pl-12"
-                    placeholder="you@example.com"
-                    required
-                  />
-                  <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-                    <Mail className="h-5 w-5" />
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                    Email Address
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="email"
+                      id="email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({...formData, email: e.target.value})}
+                      className="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 transition duration-200"
+                      placeholder="you@example.com"
+                      required
+                    />
+                    <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                      <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-                  Your Message
-                </label>
-                <div className="relative">
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                    Your Message
+                  </label>
                   <textarea
                     id="message"
-                    name="message"
                     rows="5"
                     value={formData.message}
-                    onChange={handleChange}
-                    className="block w-full px-4 py-2 md:py-3 rounded-lg bg-gray-800/50 border border-gray-700 text-white focus:ring-2 focus:ring-pink-500 focus:border-transparent placeholder-gray-500 transition-all duration-300 pl-12 pt-3"
+                    onChange={(e) => setFormData({...formData, message: e.target.value})}
+                    className="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 transition duration-200"
                     placeholder="Hello, I'd like to talk about..."
                     required
                   />
-                  <div className="absolute left-3 top-3 text-gray-400">
-                    <MessageSquare className="h-5 w-5" />
-                  </div>
                 </div>
-              </div>
 
-              <div className="pt-2">
-                <button
-                  type="submit"
-                  disabled={isSubmitting || !isAuthReady}
-                  className={`w-full flex justify-center items-center px-6 py-3.5 text-base font-medium rounded-lg text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 focus:ring-offset-gray-900
-                    ${(isSubmitting || !isAuthReady) ? 'opacity-70 cursor-not-allowed' : ''}`}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="animate-spin -ml-1 mr-3 h-5 w-5" />
-                      Sending...
-                    </>
-                  ) : (
-                    <>
-                      <Send className="-ml-1 mr-3 h-5 w-5" />
-                      Send Message
-                    </>
-                  )}
-                </button>
-              </div>
-              {/* Display userId for multi-user apps as per instructions */}
-              {userId && (
-                <p className="text-gray-500 text-xs mt-4 text-center">
-                  Your User ID: <span className="font-mono text-gray-400">{userId}</span>
-                </p>
-              )}
-            </form>
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className={`w-full flex justify-center items-center px-6 py-3.5 text-base font-medium rounded-lg text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Sending...
+                      </>
+                    ) : (
+                      'Send Message'
+                    )}
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
