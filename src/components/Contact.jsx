@@ -366,6 +366,7 @@
 // };
 
 // export default Contact;
+
 import { useState } from 'react';
 import { Client, Databases, ID } from 'appwrite';
 
@@ -395,7 +396,7 @@ const Contact = () => {
         ID.unique(),
         formData
       );
-      
+
       setSubmitStatus('success');
       setFormData({ name: '', email: '', message: '' });
     } catch (error) {
@@ -403,126 +404,127 @@ const Contact = () => {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
-      setTimeout(() => setSubmitStatus(null), 5000);
+      // Removed setTimeout for submitStatus to keep the message visible until user interacts or navigates
+      // setTimeout(() => setSubmitStatus(null), 5000);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
-            Get In Touch
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-100 to-blue-100 py-20 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+      <div className="max-w-4xl mx-auto w-full">
+        <div className="text-center mb-16">
+          <h1 className="text-6xl font-extrabold text-gray-900 tracking-tight sm:text-7xl lg:text-8xl drop-shadow-md bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600">
+            Let's Collaborate!
           </h1>
-          <p className="mt-5 max-w-xl mx-auto text-xl text-gray-500">
-            Have a project in mind or want to say hello? Fill out the form below and I'll get back to you soon.
+          <p className="mt-8 max-w-2xl mx-auto text-xl text-gray-700 leading-relaxed font-medium">
+            Ready to kickstart an exciting project or simply have a chat? Drop me a line below – I'm eager to connect!
           </p>
         </div>
-        
-        <div className="bg-white shadow-xl rounded-2xl overflow-hidden">
+
+        <div className="bg-white shadow-3xl rounded-3xl overflow-hidden transform transition-all duration-500 hover:scale-[1.01] hover:shadow-purple-200/50">
           <div className="md:flex">
             {/* Left Side - Contact Info */}
-            <div className="md:w-1/3 bg-gradient-to-b from-indigo-600 to-blue-600 p-8 text-white">
-              <div className="mb-8">
-                <h2 className="text-2xl font-bold mb-4">Contact Information</h2>
-                <p className="text-blue-100">
-                  Fill out the form or reach out through these channels:
+            <div className="md:w-1/3 bg-gradient-to-br from-indigo-600 via-purple-700 to-pink-600 p-10 text-white flex flex-col justify-between">
+              <div>
+                <h2 className="text-3xl font-bold mb-6 tracking-wide text-white">Get in Touch</h2>
+                <p className="text-purple-100 text-lg leading-relaxed mb-10">
+                  Prefer a direct approach? Find my details here:
                 </p>
               </div>
-              
-              <div className="space-y-4">
-                <div className="flex items-start">
-                  <div className="flex-shrink-0 bg-blue-500 rounded-md p-2">
-                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+
+              <div className="space-y-7">
+                <div className="flex items-center">
+                  {/* Changed text-white to text-indigo-800 for visibility */}
+                  <div className="flex-shrink-0 bg-white bg-opacity-20 rounded-full p-3 shadow-lg backdrop-blur-sm">
+                    <svg className="h-6 w-6 text-indigo-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                   </div>
-                  <div className="ml-3">
-                    <p className="text-sm font-medium text-blue-200">Email</p>
-                    <p className="text-sm text-white">kksolanki2325@gmail.com</p>
+                  <div className="ml-4">
+                    <p className="text-sm font-semibold text-purple-200">Email Address</p>
+                    <p className="text-md text-white">kksolanki2325@gmail.com</p>
                   </div>
                 </div>
-                
-                <div className="flex items-start">
-                  <div className="flex-shrink-0 bg-blue-500 rounded-md p-2">
-                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+
+                <div className="flex items-center">
+                  {/* Changed text-white to text-indigo-800 for visibility */}
+                  <div className="flex-shrink-0 bg-white bg-opacity-20 rounded-full p-3 shadow-lg backdrop-blur-sm">
+                    <svg className="h-6 w-6 text-indigo-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                     </svg>
                   </div>
-                  <div className="ml-3">
-                    <p className="text-sm font-medium text-blue-200">Phone</p>
-                    <p className="text-sm text-white">+91 6354463694</p>
+                  <div className="ml-4">
+                    <p className="text-sm font-semibold text-purple-200">Phone Number</p>
+                    <p className="text-md text-white">+91 6354463694</p>
                   </div>
                 </div>
-                
-                <div className="flex items-start">
-                  <div className="flex-shrink-0 bg-blue-500 rounded-md p-2">
-                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+
+                <div className="flex items-center">
+                  {/* Changed text-white to text-indigo-800 for visibility */}
+                  <div className="flex-shrink-0 bg-white bg-opacity-20 rounded-full p-3 shadow-lg backdrop-blur-sm">
+                    <svg className="h-6 w-6 text-indigo-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                   </div>
-                  <div className="ml-3">
-                    <p className="text-sm font-medium text-blue-200">Location</p>
-                    <p className="text-sm text-white">vadodara, Gujarat</p>
+                  <div className="ml-4">
+                    <p className="text-sm font-semibold text-purple-200">Location</p>
+                    <p className="text-md text-white">Vadodara, Gujarat, India</p>
                   </div>
                 </div>
               </div>
-              
-              <div className="mt-8">
-                <h3 className="text-lg font-medium mb-4">Follow Me</h3>
-                <div className="flex space-x-4">
-                  <a href="#" className="text-blue-200 hover:text-white">
-                    <span className="sr-only">Twitter</span>
-                    <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+
+              <div className="mt-14">
+                <h3 className="text-xl font-bold mb-4">Find Me Here</h3>
+                <div className="flex space-x-5">
+                  <a href="#" className="text-purple-200 hover:text-white transform hover:scale-125 transition-transform duration-300" aria-label="Twitter">
+                    <svg className="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
                     </svg>
                   </a>
-                  <a href="https://github.com/kakashi197" className="text-blue-200 hover:text-white">
-                    <span className="sr-only">GitHub</span>
-                    <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                  <a href="https://github.com/kakashi197" className="text-purple-200 hover:text-white transform hover:scale-125 transition-transform duration-300" aria-label="GitHub">
+                    <svg className="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
                       <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
                     </svg>
                   </a>
-                  <a href="http://www.linkedin.com/in/krish-solanki-648219365" className="text-blue-200 hover:text-white">
-                    <span className="sr-only">LinkedIn</span>
-                    <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                  <a href="http://www.linkedin.com/in/krish-solanki-648219365" className="text-purple-200 hover:text-white transform hover:scale-125 transition-transform duration-300" aria-label="LinkedIn">
+                    <svg className="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                     </svg>
                   </a>
                 </div>
               </div>
             </div>
-            
+
             {/* Right Side - Contact Form */}
-            <div className="md:w-2/3 p-8">
+            <div className="md:w-2/3 p-10 flex flex-col justify-center">
               {submitStatus === 'success' && (
-                <div className="mb-6 p-4 bg-green-50 text-green-700 rounded-lg border border-green-200">
-                  <div className="flex items-center">
-                    <svg className="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="font-medium">Thank you!</span>
+                <div className="mb-8 p-5 bg-green-50 text-green-800 rounded-xl border border-green-200 shadow-md animate-fade-in flex items-start">
+                  <svg className="h-7 w-7 text-green-500 mr-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <div>
+                    <span className="font-bold text-lg">Message Sent!</span>
+                    <p className="mt-1 text-base">Your message has been successfully delivered. I'll get back to you as soon as possible.</p>
                   </div>
-                  <p className="mt-1 text-sm">Your message has been sent successfully. I'll get back to you soon.</p>
                 </div>
               )}
-              
+
               {submitStatus === 'error' && (
-                <div className="mb-6 p-4 bg-red-50 text-red-700 rounded-lg border border-red-200">
-                  <div className="flex items-center">
-                    <svg className="h-5 w-5 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span className="font-medium">Oops!</span>
+                <div className="mb-8 p-5 bg-red-50 text-red-800 rounded-xl border border-red-200 shadow-md animate-fade-in flex items-start">
+                  <svg className="h-7 w-7 text-red-500 mr-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <div>
+                    <span className="font-bold text-lg">Submission Failed!</span>
+                    <p className="mt-1 text-base">Oops! Something went wrong while sending your message. Please try again or reach out directly.</p>
                   </div>
-                  <p className="mt-1 text-sm">Something went wrong. Please try again later.</p>
                 </div>
               )}
-              
-              <form onSubmit={handleSubmit} className="space-y-6">
+
+              <form onSubmit={handleSubmit} className="space-y-7">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="name" className="block text-sm font-semibold text-gray-800 mb-2">
                     Full Name
                   </label>
                   <div className="relative">
@@ -531,11 +533,12 @@ const Contact = () => {
                       id="name"
                       value={formData.name}
                       onChange={(e) => setFormData({...formData, name: e.target.value})}
-                      className="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 transition duration-200"
-                      placeholder="John Doe"
+                      className="block w-full px-5 py-3.5 rounded-xl border border-gray-300 focus:ring-purple-500 focus:border-purple-500 placeholder-gray-400 transition duration-300 shadow-sm outline-none text-lg"
+                      placeholder="Your full name"
                       required
                     />
-                    <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                    <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
+                      {/* Person Icon Path (already visible with gray) */}
                       <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                       </svg>
@@ -544,7 +547,7 @@ const Contact = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="email" className="block text-sm font-semibold text-gray-800 mb-2">
                     Email Address
                   </label>
                   <div className="relative">
@@ -553,11 +556,12 @@ const Contact = () => {
                       id="email"
                       value={formData.email}
                       onChange={(e) => setFormData({...formData, email: e.target.value})}
-                      className="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 transition duration-200"
-                      placeholder="you@example.com"
+                      className="block w-full px-5 py-3.5 rounded-xl border border-gray-300 focus:ring-pink-500 focus:border-pink-500 placeholder-gray-400 transition duration-300 shadow-sm outline-none text-lg"
+                      placeholder="your@example.com"
                       required
                     />
-                    <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                    <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
+                      {/* Email Icon Path for form input (already visible with gray) */}
                       <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
@@ -566,36 +570,36 @@ const Contact = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="message" className="block text-sm font-semibold text-gray-800 mb-2">
                     Your Message
                   </label>
                   <textarea
                     id="message"
-                    rows="5"
+                    rows="6"
                     value={formData.message}
                     onChange={(e) => setFormData({...formData, message: e.target.value})}
-                    className="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 transition duration-200"
-                    placeholder="Hello, I'd like to talk about..."
+                    className="block w-full px-5 py-3.5 rounded-xl border border-gray-300 focus:ring-purple-500 focus:border-purple-500 placeholder-gray-400 transition duration-300 shadow-sm outline-none text-lg"
+                    placeholder="Tell me about your project or inquiry..."
                     required
                   />
                 </div>
 
-                <div className="pt-2">
+                <div className="pt-3">
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`w-full flex justify-center items-center px-6 py-3.5 text-base font-medium rounded-lg text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                    className={`w-full flex justify-center items-center px-8 py-4 text-xl font-extrabold rounded-xl text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-pink-500 transition-all duration-300 shadow-lg ${isSubmitting ? 'opacity-60 cursor-not-allowed' : 'hover:shadow-2xl transform hover:-translate-y-1'}`}
                   >
                     {isSubmitting ? (
                       <>
-                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <svg className="animate-spin -ml-1 mr-3 h-7 w-7 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
-                        Sending...
+                        Sending your message...
                       </>
                     ) : (
-                      'Send Message'
+                      'Send Your Message'
                     )}
                   </button>
                 </div>
@@ -609,4 +613,3 @@ const Contact = () => {
 };
 
 export default Contact;
-
