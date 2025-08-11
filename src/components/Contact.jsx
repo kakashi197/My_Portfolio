@@ -579,7 +579,7 @@ const Contact = () => {
                     value={formData.message}
                     onChange={(e) => setFormData({...formData, message: e.target.value})}
                     className="block w-full px-4 py-3 sm:px-5 sm:py-3.5 rounded-lg sm:rounded-xl border border-gray-300 focus:ring-purple-500 focus:border-purple-500 placeholder-gray-400 transition duration-300 shadow-sm outline-none text-base sm:text-lg"
-                    placeholder="type your message..."
+                    placeholder="Tell me about your project or inquiry..."
                     required
                   />
                 </div>
