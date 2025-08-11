@@ -121,256 +121,199 @@ export default Hackathon;
 
 
 
-
-
 // import React from "react";
-// import { motion } from "framer-motion";
-// import logo from "../assets/Hack1.jpg";
+// import { HACKATHON_INFO } from "../constants"; // Assuming HACKATHON_INFO contains your data
+// import logo from "../assets/Hack1.jpg"; // Your certificate image
+// import { motion } from "framer-motion"; // Import motion for animations
 
 // const Hackathon = () => {
+//   // Animation variants for Framer Motion
+//   const containerVariants = {
+//     hidden: { opacity: 0 },
+//     show: {
+//       opacity: 1,
+//       transition: {
+//         staggerChildren: 0.3, // Delay children animations
+//       },
+//     },
+//   };
+
+//   const itemVariants = {
+//     hidden: { opacity: 0, y: 50 },
+//     show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+//   };
+
+//   const imageVariants = {
+//     hidden: { opacity: 0, scale: 0.8 },
+//     show: { opacity: 1, scale: 1, transition: { duration: 0.8, ease: "easeOut" } },
+//   };
+
 //   return (
-//     <div id="hackathon" className="min-h-screen bg-gradient-to-br from-gray-900 to-black py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-//       {/* Animated Background Elements */}
-//       <div className="absolute inset-0 opacity-10">
-//         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
-//         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-//       </div>
-      
-//       {/* Floating Blobs */}
-//       <div className="absolute top-20 left-20 w-96 h-96 bg-purple-600 rounded-full mix-blend-soft-light filter blur-3xl opacity-10 animate-blob"></div>
-//       <div className="absolute bottom-20 right-20 w-96 h-96 bg-cyan-600 rounded-full mix-blend-soft-light filter blur-3xl opacity-10 animate-blob animation-delay-2000"></div>
-
-//       {/* Main Content */}
-//       <div className="relative max-w-7xl mx-auto">
-//         {/* Hero Section */}
-//         <motion.header 
-//           initial={{ opacity: 0, y: -50 }}
-//           animate={{ opacity: 1, y: 0 }}
-//           transition={{ duration: 0.8 }}
-//           className="text-center mb-16"
-//         >
-//           <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500 mb-6">
-//             🚀 Hackathon 2024
-//           </h1>
-//           <motion.p 
-//             initial={{ opacity: 0 }}
-//             animate={{ opacity: 1 }}
-//             transition={{ delay: 0.3 }}
-//             className="text-xl md:text-2xl text-gray-300 mt-4 max-w-3xl mx-auto leading-relaxed"
-//           >
-//             Join the ultimate 48-hour innovation marathon where creativity meets technology!
-//           </motion.p>
-          
-//           {/* Animated CTA Button */}
+//     <motion.div
+//       id="hackathon"
+//       className="relative min-h-screen py-24 px-4 sm:px-8 lg:px-16 flex flex-col items-center bg-gradient-to-br from-gray-950 to-purple-950 text-white overflow-hidden"
+//       variants={containerVariants}
+//       initial="hidden"
+//       whileInView="show"
+//       viewport={{ once: true, amount: 0.1 }}
+//     >
+//       {/* Background Animated Blobs */}
+//       <div className="absolute inset-0 w-full h-full overflow-hidden opacity-30">
+//         {[...Array(8)].map((_, i) => (
 //           <motion.div
-//             initial={{ scale: 0 }}
-//             animate={{ scale: 1 }}
-//             transition={{ delay: 0.5, type: "spring" }}
-//             className="mt-10"
-//           >
-//             <button className="px-8 py-4 bg-gradient-to-r from-purple-600 to-cyan-500 text-white font-bold rounded-full text-lg shadow-lg hover:shadow-xl hover:from-purple-700 hover:to-cyan-600 transition-all duration-300 transform hover:scale-105">
-//               Register Now
-//             </button>
-//           </motion.div>
-//         </motion.header>
+//             key={i}
+//             initial={{ opacity: 0, scale: 0 }}
+//             animate={{
+//               opacity: [0, 0.15, 0],
+//               scale: [0.5, 1.2, 0.5],
+//               x: `${Math.random() * 200 - 100}%`,
+//               y: `${Math.random() * 200 - 100}%`,
+//             }}
+//             transition={{
+//               duration: Math.random() * 10 + 5,
+//               repeat: Infinity,
+//               repeatType: "reverse",
+//               delay: Math.random() * 2,
+//             }}
+//             className="absolute rounded-full bg-gradient-to-br from-purple-500 to-pink-500"
+//             style={{
+//               width: Math.random() * 200 + 100,
+//               height: Math.random() * 200 + 100,
+//               filter: 'blur(70px)',
+//             }}
+//           />
+//         ))}
+//       </div>
 
-//         {/* Hackathon Details Section */}
-//         <motion.section
-//           initial={{ opacity: 0, x: -100 }}
-//           whileInView={{ opacity: 1, x: 0 }}
-//           transition={{ duration: 0.8 }}
-//           viewport={{ once: true }}
-//           className="backdrop-blur-lg bg-gray-800/50 border border-gray-700/50 shadow-2xl rounded-3xl p-8 md:p-12 w-full mb-16"
-//         >
-//           <div className="flex flex-col md:flex-row gap-8">
-//             <div className="flex-1">
-//               <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-cyan-300 mb-6">
-//                 About the Event
-//               </h2>
-//               <p className="text-gray-300 leading-relaxed text-lg mb-6">
-//                 Our Hackathon is a high-energy 48-hour innovation sprint where brilliant minds collaborate to solve real-world challenges. Expect cutting-edge tech, expert mentors, and an electrifying atmosphere!
-//               </p>
-              
-//               <div className="space-y-4">
-//                 <div className="flex items-start gap-4">
-//                   <div className="mt-1 text-cyan-400">
-//                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-//                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-//                     </svg>
-//                   </div>
-//                   <div>
-//                     <h3 className="text-xl font-semibold text-white">Date & Time</h3>
-//                     <p className="text-gray-300">January 20-22, 2024 • 9:00 AM - 9:00 PM</p>
-//                   </div>
-//                 </div>
-                
-//                 <div className="flex items-start gap-4">
-//                   <div className="mt-1 text-purple-400">
-//                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-//                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-//                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-//                     </svg>
-//                   </div>
-//                   <div>
-//                     <h3 className="text-xl font-semibold text-white">Location</h3>
-//                     <p className="text-gray-300">B & B Institute, Anand • Vallabh Vidyanagar</p>
-//                   </div>
-//                 </div>
-//               </div>
+//       {/* Header Section */}
+//       <motion.header
+//         className="relative z-10 text-center mb-16 max-w-4xl"
+//         variants={itemVariants}
+//       >
+//         <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-amber-400 drop-shadow-glow leading-tight">
+//           {HACKATHON_INFO.title}
+//         </h1>
+//         <p className="text-lg md:text-xl text-gray-300 mt-4 px-4 tracking-wide">
+//           {HACKATHON_INFO.description}
+//         </p>
+//         <div className="mt-8">
+//           <a
+//             href="#certificate"
+//             className="inline-block bg-gradient-to-r from-pink-600 to-red-600 hover:from-pink-700 hover:to-red-700 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+//           >
+//             View Certificate
+//           </a>
+//         </div>
+//       </motion.header>
+
+//       {/* Hackathon Details Section */}
+//       <motion.section
+//         className="relative z-10 bg-white/10 border border-white/20 backdrop-blur-xl shadow-3xl rounded-3xl p-8 md:p-12 w-full max-w-6xl mb-20 transform hover:scale-[1.01] transition-transform duration-300"
+//         variants={itemVariants}
+//       >
+//         <h2 className="text-3xl md:text-4xl font-bold text-pink-400 mb-8 text-center sm:text-left">
+//           💡 My Hackathon Journey
+//         </h2>
+
+//         <div className="space-y-6 text-gray-200 leading-relaxed text-lg sm:text-xl">
+//           <p>
+//             As a **{HACKATHON_INFO.details.team}**, we successfully developed{" "}
+//             <strong className="text-pink-300">{HACKATHON_INFO.details.project}</strong>{" "}
+//             – a innovative solution designed to streamline relocation services with cutting-edge features.
+//             This experience was a fantastic opportunity for collaborative problem-solving and rapid development.
+//           </p>
+
+//           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+//             <div>
+//               <h3 className="text-xl sm:text-2xl font-semibold text-cyan-400 mb-4 border-b border-cyan-400/50 pb-2">
+//                 🚀 Technologies Used
+//               </h3>
+//               <ul className="space-y-3 list-inside">
+//                 <li>
+//                   <strong className="text-purple-300">Frontend:</strong>{" "}
+//                   {HACKATHON_INFO.details.technologies.frontend.join(", ")}
+//                 </li>
+//                 <li>
+//                   <strong className="text-purple-300">Backend:</strong>{" "}
+//                   {HACKATHON_INFO.details.technologies.backend.join(", ")}
+//                 </li>
+//                 <li>
+//                   <strong className="text-purple-300">Design:</strong>{" "}
+//                   {HACKATHON_INFO.details.technologies.design.join(", ")}
+//                 </li>
+//               </ul>
 //             </div>
-            
-//             <div className="flex-1">
-//               <h3 className="text-2xl font-semibold text-white mb-4">Event Highlights</h3>
-//               <ul className="space-y-4">
-//                 {[
-//                   "💰 $10,000+ in prizes",
-//                   "👨‍💻 Mentorship from industry experts",
-//                   "🍕 Free food & beverages",
-//                   "🤝 Networking opportunities",
-//                   "🏆 Special category awards",
-//                   "🎁 Exclusive swag for all participants"
-//                 ].map((item, index) => (
-//                   <motion.li
-//                     key={index}
-//                     initial={{ opacity: 0, x: 20 }}
-//                     whileInView={{ opacity: 1, x: 0 }}
-//                     transition={{ delay: index * 0.1 }}
-//                     viewport={{ once: true }}
-//                     className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors"
-//                   >
-//                     <span className="text-cyan-400">✓</span> {item}
-//                   </motion.li>
+
+//             <div>
+//               <h3 className="text-xl sm:text-2xl font-semibold text-cyan-400 mb-4 border-b border-cyan-400/50 pb-2">
+//                 🏆 Key Achievements
+//               </h3>
+//               <ul className="list-disc list-inside pl-0 space-y-2 marker:text-pink-400">
+//                 {HACKATHON_INFO.details.achievements.map((achievement, index) => (
+//                   <li key={index} className="pl-2">
+//                     {achievement}
+//                   </li>
 //                 ))}
 //               </ul>
 //             </div>
 //           </div>
-//         </motion.section>
 
-//         {/* Certificate Section */}
-//         <motion.section
-//           initial={{ opacity: 0, y: 50 }}
-//           whileInView={{ opacity: 1, y: 0 }}
-//           transition={{ duration: 0.8 }}
-//           viewport={{ once: true }}
-//           className="backdrop-blur-lg bg-gray-800/50 border border-gray-700/50 shadow-2xl rounded-3xl p-8 md:p-12 w-full mb-16"
-//         >
-//           <div className="flex flex-col md:flex-row gap-10 items-center">
-//             <div className="flex-1">
-//               <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-purple-400 mb-6">
-//                 Achievement Showcase
-//               </h2>
-//               <p className="text-gray-300 leading-relaxed text-lg mb-6">
-//                 Every participant receives an official certificate recognizing their hard work and innovation. This isn't just a piece of paper - it's proof of your ability to create under pressure and think outside the box.
-//               </p>
-              
-//               <div className="space-y-4">
-//                 <div className="flex items-center gap-4 p-4 bg-gray-900/50 rounded-xl">
-//                   <div className="text-purple-400 text-2xl">🏆</div>
-//                   <div>
-//                     <h3 className="text-xl font-semibold text-white">Certificate Features</h3>
-//                     <p className="text-gray-300">Verifiable digital credential • Shareable on LinkedIn • Includes skills demonstrated</p>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-            
-//             <motion.div 
-//               whileHover={{ scale: 1.03 }}
-//               className="flex-1 relative group"
-//             >
-//               <div className="absolute -inset-2 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-xl blur opacity-75 group-hover:opacity-100 transition-all duration-300"></div>
-//               <img
-//                 src={logo}
-//                 alt="Hackathon Certificate"
-//                 className="relative rounded-xl shadow-2xl w-full h-auto transform transition-transform group-hover:-rotate-1"
-//               />
-//             </motion.div>
+//           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 text-lg sm:text-xl">
+//             <p className="flex items-center gap-2">
+//               <span className="text-pink-400 text-2xl">📅</span>{" "}
+//               <strong>Date:</strong> {HACKATHON_INFO.details.date}
+//             </p>
+//             <p className="flex items-center gap-2">
+//               <span className="text-pink-400 text-2xl">📍</span>{" "}
+//               <strong>Location:</strong> {HACKATHON_INFO.details.location}
+//             </p>
 //           </div>
-//         </motion.section>
+//         </div>
+//       </motion.section>
 
-//         {/* Sponsors Section */}
-//         <motion.section
-//           initial={{ opacity: 0 }}
-//           whileInView={{ opacity: 1 }}
-//           transition={{ duration: 0.8 }}
-//           viewport={{ once: true }}
-//           className="text-center mb-16"
-//         >
-//           <h2 className="text-3xl md:text-4xl font-bold text-white mb-12">
-//             Proudly Supported By
+//       {/* Certificate Section */}
+//       <motion.section
+//         id="certificate"
+//         className="relative z-10 bg-white/10 border border-white/20 backdrop-blur-xl shadow-3xl rounded-3xl p-8 md:p-12 w-full max-w-6xl mb-20 flex flex-col md:flex-row items-center gap-10 animate-fade-in"
+//         variants={itemVariants}
+//       >
+//         <div className="flex-1 text-center md:text-left">
+//           <h2 className="text-3xl md:text-4xl font-bold text-cyan-400 mb-4 leading-snug">
+//             🏅 Achievement Recognized: <span className="block lg:inline-block text-pink-400">3rd Prize Winner!</span>
 //           </h2>
-//           <div className="flex flex-wrap justify-center gap-8 md:gap-16 items-center">
-//             {["TechGiant", "InnovateX", "FutureLabs", "CodeWave", "DigitalDreams"].map((sponsor, index) => (
-//               <motion.div
-//                 key={index}
-//                 whileHover={{ y: -5 }}
-//                 className="text-2xl font-bold text-gray-400 hover:text-white transition-colors"
-//               >
-//                 {sponsor}
-//               </motion.div>
-//             ))}
-//           </div>
-//         </motion.section>
-
-//         {/* Final CTA */}
-//         <motion.div
-//           initial={{ opacity: 0, scale: 0.9 }}
-//           whileInView={{ opacity: 1, scale: 1 }}
-//           transition={{ duration: 0.8 }}
-//           viewport={{ once: true }}
-//           className="text-center"
-//         >
-//           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-//             Ready to Build the Future?
-//           </h2>
-//           <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
-//             Limited spots available! Register now to secure your place in the most exciting hackathon of the year.
+//           <p className="text-gray-200 text-lg sm:text-xl mb-4">
+//             {HACKATHON_INFO.details.certificate.description}
 //           </p>
-//           <button className="px-10 py-5 bg-gradient-to-r from-purple-600 to-cyan-500 text-white font-bold rounded-full text-xl shadow-2xl hover:shadow-3xl hover:from-purple-700 hover:to-cyan-600 transition-all duration-300 transform hover:scale-105">
-//             Join Hackathon 2024
-//           </button>
+//           <p className="text-pink-300 text-lg font-medium">
+//             Proudly awarded **3rd Prize** for our innovative solution among 30+ highly competitive participating teams. This recognition fuels my passion for creative problem-solving!
+//           </p>
+//         </div>
+//         <motion.div
+//           className="flex-1 flex justify-center items-center p-4 bg-gray-800/30 rounded-2xl border border-gray-700/50 shadow-inner"
+//           variants={imageVariants}
+//         >
+//           <img
+//             src={logo}
+//             alt="Hackathon Certificate"
+//             className="w-full max-w-sm sm:max-w-md lg:max-w-lg rounded-xl shadow-xl transform hover:scale-105 hover:rotate-1 transition-transform duration-700 ease-in-out border-4 border-purple-500"
+//           />
 //         </motion.div>
-//       </div>
+//       </motion.section>
 
-//       {/* Footer */}
-//       <footer className="text-center text-gray-500 mt-24">
-//         <p className="text-sm">
-//           © 2024 Hackathon. Crafted with ❤️ and endless coffee.
+//       {/* Footer Section */}
+//       <motion.footer
+//         className="relative z-10 text-center text-gray-400 mt-10 text-sm md:text-base px-4"
+//         variants={itemVariants}
+//       >
+//         <p>
+//           &copy; {new Date().getFullYear()} Hackathon Experience | A proud moment in my academic journey at Government Polytechnic Gandhinagar.
 //         </p>
-//       </footer>
-
-//       {/* Animation CSS */}
-//       <style jsx>{`
-//         @keyframes blob {
-//           0% { transform: translate(0px, 0px) scale(1); }
-//           33% { transform: translate(30px, -50px) scale(1.1); }
-//           66% { transform: translate(-20px, 20px) scale(0.9); }
-//           100% { transform: translate(0px, 0px) scale(1); }
-//         }
-//         .animate-blob {
-//           animation: blob 7s infinite;
-//         }
-//         .animation-delay-2000 {
-//           animation-delay: 2s;
-//         }
-//       `}</style>
-//     </div>
+//         <p className="mt-2 text-gray-500">
+//           Crafted with ❤️ and code.
+//         </p>
+//       </motion.footer>
+//     </motion.div>
 //   );
 // };
 
 // export default Hackathon;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -11,7 +11,13 @@ const resumeData = {
   },
   education: [
     {
-      Qualification: "Diploma in Computer Engineering",
+      degree: "Bachelor of Engineering (BE) in Electronics & Communication",
+      institution: "Government Engineering College, Gandhinagar",
+      year: "2025 - Present",
+      result: "Pursuing"
+    },
+    {
+      degree: "Diploma in Computer Engineering",
       institution: "Government Polytechnic Gandhinagar",
       year: 2025,
       result: "8.27 SPI",
@@ -19,7 +25,7 @@ const resumeData = {
     {
       degree: "10th Standard",
       institution: "Sharada English School, Vadodara",
-      year: 2018,
+      year: 2022,
       result: "80%",
     },
   ],
@@ -39,7 +45,7 @@ const resumeData = {
     },
     {
       role: "Personal Projects",
-      description: "Developed a portfolio website,Online Notes App,Weather App, and various web applications.",
+      description: "Developed a portfolio website, Online Notes App, Weather App, and various web applications.",
       company: "Self",
       duration: "Ongoing",
       location: "Gandhinagar"
