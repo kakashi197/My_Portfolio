@@ -4,22 +4,20 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import {
   FaInstagram,
   FaTwitter,
-  FaFacebook,
-  FaWhatsapp,
+  FaLinkedin,
+  FaGithub,
   FaHome,
   FaUser,
   FaTools,
   FaFileAlt,
   FaProjectDiagram,
   FaEnvelope,
-  FaLinkedin,
-  FaGithub,
 } from "react-icons/fa";
 import logo from "../assets/kevinRushLogo.png";
 
 // Navigation Links for Sidebar
 const navigation = [
- { name: "Home", href: "#", icon: FaHome },
+  { name: "Home", href: "#", icon: FaHome },
   { name: "About", href: "#about", icon: FaUser },
   { name: "Skills", href: "#skills", icon: FaTools },
   { name: "Resume", href: "#resume", icon: FaFileAlt },
@@ -68,8 +66,9 @@ const Navbar = () => {
 
       {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-full w-64 bg-[#040b14] text-white transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
-          } transition-transform duration-300 z-50`}
+        className={`fixed top-0 left-0 h-full w-64 bg-[#040b14] text-white transform ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } transition-transform duration-300 z-50`}
       >
         <div className="p-6">
           <img
@@ -98,13 +97,13 @@ const Navbar = () => {
               href="#"
               className="text-gray-400 hover:text-white transition duration-500 hover:custom-shadow-effect"
             >
-              <FaFacebook className="h-6 w-6" />
+              <FaLinkedin className="h-6 w-6" />
             </a>
             <a
               href="#"
               className="text-gray-400 hover:text-white transition duration-500 hover:custom-shadow-effect"
             >
-              <FaWhatsapp className="h-6 w-6" />
+              <FaGithub className="h-6 w-6" />
             </a>
           </div>
 
