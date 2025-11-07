@@ -21,7 +21,7 @@ const App = () => {
 
    
 
-    <div className='container mx-auto px-8'> {/* Fixed missing closing quote */}
+    <div className='container mx-auto px-8 pt-20'> {/* Fixed missing closing quote */}
         <Navbar />
         <Hero/>
         <About/>
@@ -30,7 +30,12 @@ const App = () => {
         <Exp/>
         <Hackathon />
         <Projects/>
-        <Contact/>
+
+       
+
+       <section id="contact">
+        <Contact />
+      </section>
         
         
       </div>
