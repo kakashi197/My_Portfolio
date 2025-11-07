@@ -7,3 +7,14 @@
 }
 
 @plugin "daisyui";
+
+/* globals.css ya App.css me */
+section {
+  scroll-margin-top: 5rem; /* Smooth scroll ke liye */
+}
+
+main {
+  padding-top: 5rem; /* Ya fir direct main element me */
+}
+
+
