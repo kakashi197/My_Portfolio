@@ -232,10 +232,10 @@ const Navbar = () => {
 
         {/* Social Media Icons */}
         <div className="flex gap-4 text-xl text-gray-400">
-          <a href="#" className="hover:text-[aqua] transition duration-300 p-2 rounded-full hover:bg-[#1a1f2e]">
+          <a href="https://www.linkedin.com/in/krish-solanki-648219365" className="hover:text-[aqua] transition duration-300 p-2 rounded-full hover:bg-[#1a1f2e]">
             <FaLinkedin />
           </a>
-          <a href="#" className="hover:text-[aqua] transition duration-300 p-2 rounded-full hover:bg-[#1a1f2e]">
+          <a href="https://github.com/kakashi197" className="hover:text-[aqua] transition duration-300 p-2 rounded-full hover:bg-[#1a1f2e]">
             <FaGithub />
           </a>
           <a href="#" className="hover:text-[aqua] transition duration-300 p-2 rounded-full hover:bg-[#1a1f2e]">
