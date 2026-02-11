@@ -413,14 +413,14 @@ const Contact = () => {
   };
 
   return (
-    <div id="contact" className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-100 to-blue-100 py-8 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+    <div id="contact" className="min-h-screen bg-gradient-to-br  py-8 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
       <div className="w-full max-w-6xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-8 md:mb-16 px-2">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight drop-shadow-md bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600">
             Let's Collaborate!
           </h1>
-          <p className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed font-medium max-w-2xl mx-auto px-2">
+          <p className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg text-white leading-relaxed font-medium max-w-2xl mx-auto px-2">
             Ready to kickstart an exciting project or simply have a chat? Drop me a line below – I'm eager to connect!
           </p>
         </div>
@@ -540,7 +540,7 @@ const Contact = () => {
                       id="name"
                       value={formData.name}
                       onChange={(e) => setFormData({...formData, name: e.target.value})}
-                      className="block w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500 placeholder-gray-400 transition duration-300 shadow-sm outline-none text-sm sm:text-base"
+                      className="block w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border text-black border-gray-300 focus:ring-purple-500 focus:border-purple-500 placeholder-gray-400 transition duration-300 shadow-sm outline-none text-sm sm:text-base"
                       placeholder="Your full name"
                       required
                     />
@@ -562,7 +562,7 @@ const Contact = () => {
                       id="email"
                       value={formData.email}
                       onChange={(e) => setFormData({...formData, email: e.target.value})}
-                      className="block w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border border-gray-300 focus:ring-pink-500 focus:border-pink-500 placeholder-gray-400 transition duration-300 shadow-sm outline-none text-sm sm:text-base"
+                      className="block w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border text-black border-gray-300 focus:ring-pink-500 focus:border-pink-500 placeholder-gray-400 transition duration-300 shadow-sm outline-none text-sm sm:text-base"
                       placeholder="your@example.com"
                       required
                     />
@@ -583,7 +583,7 @@ const Contact = () => {
                     rows="4"
                     value={formData.message}
                     onChange={(e) => setFormData({...formData, message: e.target.value})}
-                    className="block w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500 placeholder-gray-400 transition duration-300 shadow-sm outline-none text-sm sm:text-base resize-none"
+                    className="block w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border text-black border-gray-300 focus:ring-purple-500 focus:border-purple-500 placeholder-gray-400 transition duration-300 shadow-sm outline-none text-sm sm:text-base resize-none"
                     placeholder="Tell me about your project or inquiry..."
                     required
                   />
