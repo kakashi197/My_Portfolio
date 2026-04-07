@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from "framer-motion";
-import aboutImage from "../assets/my image.png";
+import aboutImage from "../assets/projects/FitRoom.app_1774611225070.jpg";
 import { FaPython, FaReact, FaNodeJs, FaCameraRetro, FaServer, FaDatabase, FaCode, FaMobileAlt } from "react-icons/fa";
 import { SiDjango, SiNextdotjs, SiTailwindcss, SiTypescript } from "react-icons/si";
 
