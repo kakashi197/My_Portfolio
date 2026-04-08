@@ -101,7 +101,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
-import backgroundImage from "../assets/my image.png";
+import backgroundImage from "../assets/FitRoom.app_1774611225070.jpg";
 
 // ✅ Desktop Background Image URL
 const deskImage =
